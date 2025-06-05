@@ -1,61 +1,27 @@
 ---
 // src/pages/index.astro
-import Layout from '../layouts/Layout.astro'; // 导入基础布局
+import Layout from '../layouts/Layout.astro';
 import ProductCardHome from '../components/ProductCardHome.astro';
 import FeatureHighlight from '../components/FeatureHighlight.astro';
-import { productsData } from '../data/products'; // 导入产品数据
-import { homepageReviews } from '../data/reviewsData'; // 导入评论数据
-
-// 从Astro Ecommerce模板中导入评论组件 (假设路径和名称)
-// 你可能需要根据模板的实际情况调整这个导入路径
-// 如果 Reviews.astro / Reviews.tsx 不存在或你想用新的，我们需要创建它
-// 暂时我们先假设它存在且可以这样使用
-import Reviews from '../components/reviews/Reviews.astro'; // 或者 ../components/reviews/Reviews.tsx 如果是React组件并已配置好集成
+import StaticReviewsDisplay from '../components/StaticReviewsDisplay.astro'; // 导入新的静态评论组件
+import { productsData } from '../data/products';
+import { homepageReviews } from '../data/reviewsData'; // 我们的静态评论数据
 
 const siteSlogan = "Your go-to hub for all streaming services!";
 const siteTitle = "Jaideepas";
 
 const features = [
   { iconClass: "fas fa-shield-alt", title: "Secure", description: "Prioritizing the security of your accounts." },
-  { iconClass: "fas fa-rocket", title: "Convenient", description: "Easy setup, effortless management." }, // Replaced cogs with rocket for a more dynamic feel
+  { iconClass: "fas fa-rocket", title: "Convenient", description: "Easy setup, effortless management." },
   { iconClass: "fas fa-tags", title: "Affordable", description: "High Value, Significant Cost Savings." },
   { iconClass: "fas fa-headset", title: "Support", description: "Dedicated 24/7 Customer Service." },
 ];
-
-// 传递给评论组件的 props 可能需要调整，取决于 Reviews 组件如何定义
-// 这是一个基于通用评论组件的假设
-const reviewsComponentProps = {
-  title: "What Our Customers Say",
-  subtitle: "Trusted by thousands of happy users worldwide.",
-  reviews: homepageReviews.map(review => ({ // 将我们的数据格式映射到组件可能期望的格式
-    id: review.id,
-    author: {
-      name: review.userName,
-      avatarUrl: review.avatarUrl || '/images/avatars/default-avatar.png', // 提供一个默认头像
-      handle: review.productSlug ? `@${review.productSlug.split('-')[0]}` : '@customer', // 简单生成一个handle
-    },
-    rating: review.rating,
-    title: review.title,
-    body: review.text,
-    date: review.date,
-    href: review.productSlug ? `/product/${review.productSlug}` : '#',
-  })),
-  cta: {
-    label: "See all products",
-    href: "/product/spotify-premium" // 链接到某个产品或产品列表页
-  }
-};
-
-// 如果 ../components/reviews/Reviews.astro 实际不存在，或者你想用一个更简单的版本，
-// 我们可以稍后创建一个简化的评论展示组件。
-// 现在，如果 Reviews 组件导入失败，页面会报错。
 ---
 <Layout title={siteTitle} description={siteSlogan}>
   {/* Hero Section - Slogan */}
   <section class="relative bg-gradient-to-br from-gray-100 via-white to-gray-200 dark:from-gray-800 dark:via-gray-900 dark:to-black py-20 md:py-32 text-center overflow-hidden">
     <div class="absolute inset-0 opacity-50 dark:opacity-30">
       {/* Optional: Add a subtle background pattern or image here */}
-      {/* <img src="/images/hero-pattern.svg" alt="" class="w-full h-full object-cover"/> */}
     </div>
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 fade-in-section">
       <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6">
@@ -90,7 +56,7 @@ const reviewsComponentProps = {
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {productsData.map((product, index) => (
           <div class="fade-in-section" style={`animation-delay: ${index * 100}ms;`}>
-            <ProductCardHome product={product} loading={index < 3 ? 'eager' : 'lazy'} /> {/* 首屏前几个产品图片可以eager加载 */}
+            <ProductCardHome product={product} loading={index < 3 ? 'eager' : 'lazy'} />
           </div>
         ))}
       </div>
@@ -110,7 +76,7 @@ const reviewsComponentProps = {
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {features.map((feature, index) => (
-          <div class="fade-in-section" style={`animation-delay: ${index * 100 + productsData.length * 50}ms;`}> {/* 调整动画延迟 */}
+          <div class="fade-in-section" style={`animation-delay: ${index * 100 + productsData.length * 50}ms;`}>
             <FeatureHighlight {...feature} />
           </div>
         ))}
@@ -118,27 +84,21 @@ const reviewsComponentProps = {
     </div>
   </section>
 
-  {/* Reviews Section */}
-  {/* 
-    这里假设你有一个 ../components/reviews/Reviews.astro (或 .tsx) 组件。
-    如果该组件不存在，或者其props与 reviewsComponentProps 不匹配，这里可能会出错。
-    你需要检查 astro-ecommerce 模板中该组件的实际用法和 props 结构。
-  */}
-  <section id="customer-reviews" class="py-16 md:py-24 bg-white dark:bg-gray-900">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 fade-in-section" style={`animation-delay: ${(features.length + productsData.length) * 50}ms;`}>
-      {/* 
-        直接传递处理过的props给Reviews组件。
-        确保 Reviews 组件能接受这样的结构，或者调整 reviewsComponentProps 的结构。
-      */}
-      <Reviews {...reviewsComponentProps} />
+  {/* Static Reviews Display Section */}
+  <section id="customer-reviews" class="bg-white dark:bg-gray-900"> {/* Removed py-16 md:py-24 to let StaticReviewsDisplay control its padding */}
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 fade-in-section" style={`animation-delay: ${(features.length + productsData.length) * 50 + 200}ms;`}>
+      <StaticReviewsDisplay 
+        reviews={homepageReviews} 
+        title="Hear From Our Happy Users" 
+        subtitle="These are some of the comments from our satisfied customers."
+      />
     </div>
   </section>
 
 </Layout>
 
 <script>
-  // 首页的特定脚本 (例如，用于更复杂的动画或交互)
-  // 淡入动画的 IntersectionObserver (如果Layout中没有全局处理，或者首页需要特定处理)
+  // 首页的特定脚本
   document.addEventListener('DOMContentLoaded', () => {
     const sections = document.querySelectorAll('.fade-in-section');
     if (window.IntersectionObserver) {
@@ -146,17 +106,15 @@ const reviewsComponentProps = {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('is-visible');
-            // 可选: 动画执行一次后停止观察
             // obs.unobserve(entry.target); 
           }
         });
-      }, { threshold: 0.1 }); // 当元素10%可见时触发
+      }, { threshold: 0.05 }); // 更早触发动画
 
       sections.forEach(section => {
         observer.observe(section);
       });
     } else {
-      // 对于不支持 IntersectionObserver 的旧浏览器，直接显示所有部分
       sections.forEach(section => {
         section.classList.add('is-visible');
       });
