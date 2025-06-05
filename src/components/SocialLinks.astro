@@ -1,0 +1,29 @@
+---
+// src/components/SocialLinks.astro
+// 定义社交媒体链接的数据
+// 请确保你已经设置了相应的Font Awesome图标 (例如: fab fa-twitter)
+// 或者你可以使用SVG图标代替Font Awesome类
+const socialMediaLinks = [
+  { name: "Twitter", href: "https://twitter.com/yourprofile", iconClass: "fab fa-twitter", ariaLabel: "Follow us on Twitter" }, // 请替换为你的实际链接
+  { name: "Facebook", href: "https://facebook.com/yourprofile", iconClass: "fab fa-facebook-f", ariaLabel: "Follow us on Facebook" },
+  { name: "Instagram", href: "https://instagram.com/yourprofile", iconClass: "fab fa-instagram", ariaLabel: "Follow us on Instagram" },
+  { name: "LinkedIn", href: "https://linkedin.com/in/yourprofile", iconClass: "fab fa-linkedin-in", ariaLabel: "Connect with us on LinkedIn" },
+  // 你可以根据需要添加更多社交媒体平台，例如 Line, WhatsApp 等
+  // { name: "Line", href: "https://line.me/ti/p/YOUR_LINE_ID", iconClass: "fab fa-line", ariaLabel: "Contact us on Line" },
+];
+---
+<div class="flex space-x-4">
+  {socialMediaLinks.map(social => (
+    <a 
+      href={social.href} 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      aria-label={social.ariaLabel}
+      title={social.name} // 添加 title 属性以便鼠标悬停时显示名称
+      class="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200 ease-in-out transform hover:scale-110"
+    >
+      <span class="sr-only">{social.name}</span> {/* 为屏幕阅读器提供额外信息 */}
+      <i class:list={[social.iconClass, "text-xl md:text-2xl"]}></i> {/* text-xl 或 text-2xl 控制图标大小 */}
+    </a>
+  ))}
+</div>
