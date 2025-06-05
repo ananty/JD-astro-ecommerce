@@ -54,7 +54,11 @@ const isHomePage = Astro.url.pathname === '/';
   {/* <link rel="stylesheet" href="/styles/global.css"> */}
 
   <style is:global>
+
     /* :root 可以定义全局CSS变量，Tailwind会自动处理大部分变量 */
+      @tailwind base;
+      @tailwind components;
+      @tailwind utilities;
     :root {
       --color-primary: #3b82f6; /* Tailwind blue-500 示例 */
       --color-secondary: #10b981; /* Tailwind emerald-500 示例 */
