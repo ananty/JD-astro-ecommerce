@@ -1,53 +1,167 @@
 ---
+// src/layouts/Layout.astro
+import Navbar from '../components/Navbar.astro'; // 导入我们创建的Navbar组件
+import Footer from '../components/Footer.astro'; // 导入我们创建的Footer组件
+// 注意: ThemeToggle 已经被 Navbar.astro 内部导入和使用了
+
+// 定义Props接口，用于接收每个页面的特定标题和描述
 export interface Props {
-	title: string;
+	title: string; // 页面标题 (必填)
+	description?: string; // 页面描述 (可选)
+  bodyClass?: string; // (可选) 给body标签添加额外的class
+  mainClass?: string; // (可选) 给main标签添加额外的class
 }
 
-const { title } = Astro.props;
+// 从Props中获取标题和描述，如果描述未提供，则使用默认值
+const { 
+  title, 
+  description = "Jaideepas - Your go-to hub for all streaming services!", // 默认英文描述
+  bodyClass = "",
+  mainClass = "flex-grow" 
+} = Astro.props;
+
+// 检查当前路径是否为首页，用于可能的特定首页样式或脚本
+const isHomePage = Astro.url.pathname === '/';
 ---
-
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
-    <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Noto+Sans:300,400,500,600,700,800|PT+Mono:300,400,500,600,700"
-      rel="stylesheet"
-    />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-    <link rel="canonical" href="https://www.creative-tim.com/astro/" />
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-NKDMSK6');</script>
-    <!-- End Google Tag Manager -->
+<html lang="en" class="scroll-smooth"> {/* 语言设置为英文，启用平滑滚动 */}
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" /> {/* 确保 viewport 正确设置 */}
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg" /> {/* 你的网站图标，请确保 public/favicon.svg 存在 */}
+	<meta name="generator" content={Astro.generator} />
+	
+  <title>{title} | Jaideepas</title> {/* 页面标题格式 */}
+  <meta name="description" content={description} />
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    
-	</head>
-	<body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKDMSK6"
-      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-		<slot />
-	</body>
+  {/* 开放图谱 (Open Graph) 元标签 - 用于社交媒体分享预览 (基本示例) */}
+  <meta property="og:title" content={`${title} | Jaideepas`} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/images/og-image.png" /> {/* 创建一个通用的分享图片 public/images/og-image.png */}
+  <meta property="og:url" content={Astro.url.href} />
 
-  <!-- Bootstrap JavaScript Bundle with Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-  <!-- Product JavaScript -->
-  <script>
-    import "/assets/js/astro-ecommerce.js"
+  {/* Twitter Card 元标签 (基本示例) */}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={`${title} | Jaideepas`} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content="/images/og-image.png" /> {/* 通常与og:image使用相同的图片 */}
+  
+  {/* Font Awesome CDN (用于图标) - 请确保这是你选择的图标库 */}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  {/* 你可以在这里链接全局CSS文件，或者使用下面的 <style is:global> */}
+  {/* <link rel="stylesheet" href="/styles/global.css"> */}
+
+  <style is:global>
+    /* :root 可以定义全局CSS变量，Tailwind会自动处理大部分变量 */
+    :root {
+      --color-primary: #3b82f6; /* Tailwind blue-500 示例 */
+      --color-secondary: #10b981; /* Tailwind emerald-500 示例 */
+      /* ... 其他自定义颜色变量 */
+    }
+
+    body {
+      @apply bg-white text-gray-800 dark:bg-gray-900 dark:text-gray-200; /* 基础背景和文字颜色 */
+      @apply transition-colors duration-300 ease-in-out; /* 颜色过渡效果 */
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* 为锚点链接启用平滑滚动 */
+    html.scroll-smooth {
+      scroll-behavior: smooth;
+    }
+    html:not(.scroll-smooth) { /* 如果浏览器不支持或未指定 scroll-smooth */
+        scroll-behavior: auto;
+    }
+
+    /* 内容加载时的淡入动画 (可以由JS控制添加 .is-visible 类来触发) */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in-section { /* 初始状态 */
+      opacity: 0;
+    }
+    /* 当JS添加 .is-visible 类时，应用动画 */
+    .fade-in-section.is-visible {
+      animation: fadeIn 0.7s ease-out forwards;
+    }
+
+    /* 按钮和卡片悬停效果的基类 (示例) */
+    .btn-base {
+      @apply transition-all duration-200 ease-in-out transform;
+    }
+    .btn-base:hover {
+      @apply scale-105;
+    }
+    .card-base-hover {
+      @apply transition-all duration-300 ease-in-out;
+    }
+    .card-base-hover:hover {
+      @apply shadow-xl; 
+    }
+
+    /* 为使用了 prose 的文章内容优化暗黑模式下的链接颜色 */
+    .prose a {
+      @apply dark:text-primary-400;
+    }
+    .prose strong {
+      @apply dark:text-gray-100;
+    }
+
+    /* 隐藏打印时的导航栏和页脚 (Navbar和Footer组件内部也应有 print:hidden) */
+    @media print {
+      header, footer {
+        display: none !important;
+      }
+    }
+  </style>
+
+  {/* 
+    用于在页面加载时立即应用主题的内联脚本，以避免“主题闪烁” (FOUC - Flash Of Unstyled Content)。
+    这个脚本应该放在 <head> 的早期。
+  */}
+  <script is:inline>
+    const theme = (() => {
+      if (typeof localStorage !== 'undefined' && localStorage.getItem('color-theme')) {
+        return localStorage.getItem('color-theme');
+      }
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+      }
+      return 'light';
+    })();
+
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    // 在 Astro 中，如果使用了 View Transitions，这个脚本可能需要调整或由 Astro 的机制处理
+    // 但对于传统的多页面应用 (MPA) 或未使用 View Transitions 的 SPA，这是标准做法。
   </script>
+  <slot name="head- допълнително" /> {/* 允许页面注入额外的head内容 */}
+</head>
+<body class:list={["antialiased min-h-screen flex flex-col", bodyClass]}>
+  {/* 
+    antialiased: 改善字体渲染
+    min-h-screen: 最小高度为屏幕高度
+    flex flex-col: 使页脚能够固定在底部 (如果内容不足一屏)
+  */}
+  <Navbar />
+
+  <main id="main-content" class:list={[mainClass]}>
+    {/* 
+      flex-grow: 使main区域占据Navbar和Footer之间的所有可用空间
+      id="main-content":  可用于“跳到主内容”的无障碍链接
+    */}
+    <slot /> {/* Astro 的插槽，用于注入每个页面的具体内容 */}
+  </main>
+
+  <Footer />
+  <slot name="body-end-scripts" /> {/* 允许页面在body结束前注入脚本 */}
+</body>
 </html>
-<style is:global>
-	code {
-		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-			Bitstream Vera Sans Mono, Courier New, monospace;
-	}
-</style>
