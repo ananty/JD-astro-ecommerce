@@ -1,5 +1,5 @@
 ---
-// src/components/Navbar.astro (修正版 - 只有一个 ThemeToggle)
+// src/components/Navbar.astro (最终正确版本)
 import ThemeToggle from './ThemeToggle.astro';
 
 const navLinks = [
@@ -14,7 +14,8 @@ const logoUrl = "/images/logo.svg";
 <header class="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm dark:shadow-gray-700/50">
   <nav class="container mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
     <div class="flex items-center justify-between h-16 md:h-20">
-      {/* Logo 和网站标题 (左侧) */}
+      
+      <!-- 左侧 Logo -->
       <div class="flex items-center">
         <a href="/" class="flex-shrink-0 flex items-center group" aria-label="Go to homepage">
           <img class="h-8 w-auto md:h-10 group-hover:opacity-80 transition-opacity" src={logoUrl} alt={`${siteTitle} Logo`} />
@@ -24,57 +25,68 @@ const logoUrl = "/images/logo.svg";
         </a>
       </div>
 
-      {/* 导航和控件 (右侧) */}
+      <!-- 右侧容器 -->
       <div class="flex items-center">
-        {/* 桌面端导航链接 (仅在桌面端显示) */}
-        <div class="hidden md:flex items-center space-x-1 lg:space-x-2">
+        <!-- 桌面导航链接 (仅在 md 及以上尺寸显示) -->
+        <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
           {navLinks.map(link => {
-            const isActive = Astro.url.pathname === link.href || 
-                             (link.href.startsWith('/product') && Astro.url.pathname.startsWith('/product'));
+            const isActive = Astro.url.pathname === link.href || (Astro.url.pathname.startsWith('/product') && link.href.includes('/product'));
             return (
-              <a href={link.href} class:list={[/* ... 样式保持不变 ... */]}>
+              <a href={link.href} class:list={[
+                "px-3 py-2 rounded-md text-sm lg:text-base font-medium transition-all duration-200 ease-in-out",
+                "hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-primary-600 dark:hover:text-primary-400",
+                isActive ? "text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-gray-800/50" : "text-gray-700 dark:text-gray-300"
+              ]} aria-current={isActive ? "page" : undefined}>
                 {link.label}
               </a>
             );
           })}
-        </div>
-
-        {/* 主题切换按钮 (始终显示) */}
-        <div class="ml-4"> {/* 给了它一个固定的左边距 */}
-          <ThemeToggle />
-        </div>
+        </nav>
         
-        {/* 移动端汉堡菜单按钮 (仅在移动端显示) */}
+        {/* 主题切换按钮 (始终渲染，但在移动端和桌面端之间有间距调整) */}
+        <div class="ml-4"><ThemeToggle /></div>
+
+        {/* 移动端汉堡菜单按钮 (仅在 md 以下尺寸显示) */}
         <div class="md:hidden ml-2">
-          <button 
-            id="mobile-menu-button" 
-            type="button" 
-            class="inline-flex items-center justify-center p-2 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500" 
-            aria-controls="mobile-menu" 
-            aria-expanded="false"
-            aria-label="Open main menu"
-          >
+          <button id="mobile-menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open main menu">
             <span class="sr-only">Open main menu</span>
-            <svg class="block h-6 w-6" id="menu-icon-open" ... > ... </svg>
-            <svg class="hidden h-6 w-6" id="menu-icon-close" ... > ... </svg>
+            <svg class="block h-6 w-6" id="menu-icon-open" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+            <svg class="hidden h-6 w-6" id="menu-icon-close" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
           </button>
         </div>
       </div>
     </div>
   </nav>
 
-  {/* 移动端展开的菜单内容 (保持不变) */}
+  {/* 移动端展开菜单 */}
   <div class="md:hidden hidden border-t border-gray-200 dark:border-gray-700" id="mobile-menu">
     <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-      {navLinks.map(link => {
-        // ... 这部分代码保持不变 ...
-        return <a href={link.href} class:list={[/* ... */]}>{link.label}</a>;
-      })}
+      {navLinks.map(link => <a href={link.href} class:list={[/* ... */]}>{link.label}</a>)}
     </div>
   </div>
 </header>
 
-{/* 脚本也保持不变 */}
 <script>
-  // ... 移动端菜单切换逻辑 ...
+  // 移动端菜单切换逻辑
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuIconOpen = document.getElementById('menu-icon-open');
+  const menuIconClose = document.getElementById('menu-icon-close');
+  if (mobileMenuButton && mobileMenu && menuIconOpen && menuIconClose) {
+    mobileMenuButton.addEventListener('click', () => {
+      const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+      mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+      mobileMenu.classList.toggle('hidden');
+      menuIconOpen.classList.toggle('hidden');
+      menuIconClose.classList.toggle('hidden');
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenuButton.setAttribute('aria-expanded', 'false');
+        mobileMenu.classList.add('hidden');
+        menuIconOpen.classList.remove('hidden');
+        menuIconClose.classList.add('hidden');
+      });
+    });
+  }
 </script>

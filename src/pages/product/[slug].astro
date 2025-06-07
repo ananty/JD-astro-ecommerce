@@ -1,7 +1,7 @@
 ---
-// src/pages/product/[slug].astro (版本 2 - 带图片库)
+// src/pages/product/[slug].astro (最终完整版)
 import Layout from '../../layouts/Layout.astro';
-import { productsData, getRandomProducts, type Product as ProductType } from '../../data/products';
+import { productsData, getRandomProducts, type Product as ProductType, type Sku as SkuType } from '../../data/products';
 import ProductCardHome from '../../components/ProductCardHome.astro';
 
 export async function getStaticPaths() {
@@ -13,73 +13,49 @@ export async function getStaticPaths() {
 
 const product: ProductType | undefined = Astro.props.product;
 
-// 检查 product 是否存在
 if (!product) {
   return new Response(null, { status: 404, statusText: 'Not Found' });
 }
 
-// 现在进行解构
+// 安全地获取数据
 const { name, category, longDescription, skus, galleryImages, slug } = product;
-
-// 安全地获取 defaultSku 和 mainImage
 const defaultSku = skus && skus.length > 0 ? skus[0] : null;
 const mainImage = galleryImages && galleryImages.length > 0 ? galleryImages[0] : null;
 
-// 如果关键数据缺失，主动抛出错误，这比白屏好得多！
-if (!defaultSku) {
-  throw new Error(`FATAL: Product with slug "${slug}" has no SKUs defined, or its 'skus' array is empty. Please check your data in src/data/products.ts.`);
-}
-if (!mainImage) {
-  throw new Error(`FATAL: Product with slug "${slug}" has no galleryImages defined, or its 'galleryImages' array is empty. Please check your data in src/data/products.ts.`);
-}
+// 如果关键数据缺失，主动抛出错误
+if (!defaultSku) { throw new Error(`Product with slug "${slug}" has no SKUs defined in products.ts.`); }
+if (!mainImage) { throw new Error(`Product with slug "${slug}" has no galleryImages defined in products.ts.`); }
 
-// 只有在所有检查通过后，才计算相关产品
 const relatedProducts = getRandomProducts(3, slug);
 ---
 <Layout title={name} description={product.shortDescription}>
   <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
     <div class="grid md:grid-cols-2 gap-8 lg:gap-12 items-start">
-      <!-- Image Gallery Section -->
-      <div id="image-gallery" class="fade-in-section sticky top-24">
-        {galleryImages && galleryImages.length > 0 ? (
-          <div>
-            {/* Main Image Display */}
-            <div class="aspect-[4/3] mb-4 rounded-lg overflow-hidden shadow-xl bg-gray-100 dark:bg-gray-800">
-              <img 
-                id="main-product-image"
-                src={mainImage.src} 
-                alt={mainImage.alt}
-                class="w-full h-full object-cover transition-opacity duration-300 ease-in-out"
-                loading="eager"
-                width="800" height="600"
-              />
+      
+      <!-- ==================== Image Gallery Section ==================== -->
+      <div id="image-gallery" class="sticky top-24">
+        <div>
+          <div class="aspect-[4/3] mb-4 rounded-lg overflow-hidden shadow-xl bg-gray-100 dark:bg-gray-800">
+            <img id="main-product-image" src={mainImage.src} alt={mainImage.alt} class="w-full h-full object-cover transition-opacity duration-300 ease-in-out" loading="eager" width="800" height="600"/>
+          </div>
+          {galleryImages.length > 1 && (
+            <div id="thumbnail-container" class="grid grid-cols-4 sm:grid-cols-5 gap-2 md:gap-3">
+              {galleryImages.map((image, index) => (
+                <button 
+                  class:list={[
+                    "thumbnail-button block aspect-square rounded-md overflow-hidden border-2 transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2",
+                    index === 0 ? "border-primary-500" : "border-transparent hover:border-primary-300"
+                  ]}
+                  data-large-src={image.src} data-large-alt={image.alt} aria-label={`View image ${index + 1}`}
+                >
+                  <img src={image.src} alt={`Thumbnail of ${image.alt}`} class="w-full h-full object-cover" loading="lazy" width="150" height="150"/>
+                </button>
+              ))}
             </div>
-            {/* Thumbnail Navigation */}
-            {galleryImages.length > 1 && (
-              <div id="thumbnail-container" class="grid grid-cols-4 sm:grid-cols-5 gap-2 md:gap-3">
-                {galleryImages.map((image, index) => (
-                  <button 
-                    class:list={[
-                      "thumbnail-button block aspect-square rounded-md overflow-hidden border-2 transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2",
-                      index === 0 ? "border-primary-500" : "border-transparent hover:border-primary-300"
-                    ]}
-                    data-large-src={image.src}
-                    data-large-alt={image.alt}
-                    aria-label={`View image ${index + 1}`}
-                  >
-                    <img src={image.src} alt={`Thumbnail of ${image.alt}`} class="w-full h-full object-cover" loading="lazy" width="150" height="150"/>
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        ) : (
-          <div class="aspect-[4/3] rounded-lg bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-gray-500">
-            No Image Available
-          </div>
-        )}
+          )}
+        </div>
         <script>
-          // 客户端脚本，用于图片库交互
+          // 图片库交互脚本
           const mainImageEl = document.getElementById('main-product-image') as HTMLImageElement;
           const thumbnailContainer = document.getElementById('thumbnail-container');
 
@@ -90,101 +66,122 @@ const relatedProducts = getRandomProducts(3, slug);
               const targetButton = (event.target as HTMLElement).closest('.thumbnail-button') as HTMLButtonElement | null;
               if (!targetButton) return;
 
-              // 更新主图
               const newSrc = targetButton.dataset.largeSrc;
               const newAlt = targetButton.dataset.largeAlt;
-              if (newSrc && newAlt) {
-                // 添加淡出效果
+              if (newSrc && newAlt && mainImageEl.src !== newSrc) {
                 mainImageEl.style.opacity = '0';
                 setTimeout(() => {
                   mainImageEl.src = newSrc;
                   mainImageEl.alt = newAlt;
-                  // 添加淡入效果
                   mainImageEl.style.opacity = '1';
-                }, 150); // 延迟应小于过渡时间
+                }, 150);
               }
 
-              // 更新缩略图边框样式
-              thumbnailButtons.forEach(btn => {
-                btn.classList.remove('border-primary-500');
-                btn.classList.add('border-transparent');
-              });
-              targetButton.classList.add('border-primary-500');
-              targetButton.classList.remove('border-transparent');
+              thumbnailButtons.forEach(btn => btn.classList.replace('border-primary-500', 'border-transparent'));
+              targetButton.classList.replace('border-transparent', 'border-primary-500');
             });
           }
         </script>
       </div>
 
-      <!-- Product Details & Purchase Section -->
-      <div class="fade-in-section" style="animation-delay: 100ms;">
+      <!-- ==================== Product Details & Purchase Section ==================== -->
+      <div>
         {category && <p class="text-sm text-primary-600 dark:text-primary-400 font-semibold mb-2 uppercase tracking-wider">{category}</p>}
         <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">{name}</h1>
         
-        {/* SKU 选择 & 购买 */}
-        <div id="product-options" class="mb-6" data-product-skus={JSON.stringify(skus)}>
+        <div id="product-options" class="mb-6">
           <h3 class="text-md font-semibold text-gray-700 dark:text-gray-300 mb-3">Select Plan:</h3>
           <div class="space-y-3" id="sku-radios-container">
             {skus.map((sku, index) => (
-              <label class:list={[ /* ...样式与之前版本相同... */ ]}>
+              <label class:list={["flex items-center justify-between p-4 border rounded-lg cursor-pointer transition-all duration-200 ease-in-out", "hover:border-primary-500 dark:hover:border-primary-400", index === 0 ? "border-primary-500 ring-2 ring-primary-500" : "border-gray-300 dark:border-gray-600", "bg-white dark:bg-gray-800/50 has-[:checked]:bg-primary-50 dark:has-[:checked]:bg-primary-500/10 has-[:checked]:border-primary-500 dark:has-[:checked]:border-primary-400"]}>
                 <div class="flex items-center">
-                  <input type="radio" name="selected_sku" value={sku.id} class="form-radio ..." checked={index === 0} aria-describedby={`sku-price-${sku.id}`}/>
-                  <span class="ml-3 ...">{sku.duration}</span>
+                  <input 
+                    type="radio" 
+                    name="selected_sku" 
+                    value={sku.id} 
+                    class="form-radio h-5 w-5 text-primary-600 border-gray-400 focus:ring-primary-500 focus:ring-offset-0" 
+                    checked={index === 0} 
+                    aria-describedby={`sku-price-${sku.id}`}
+                    data-sku-data={JSON.stringify(sku)}
+                  />
+                  <span class="ml-3 text-sm font-medium text-gray-800 dark:text-gray-200">{sku.duration}</span>
                 </div>
-                <span id={`sku-price-${sku.id}`} class="...">{sku.currencySymbol}{sku.price.toFixed(2)}</span>
+                <span id={`sku-price-${sku.id}`} class="text-sm font-semibold text-gray-900 dark:text-white">{sku.currencySymbol}{sku.price.toFixed(2)}</span>
               </label>
             ))}
           </div>
         </div>
         
         <div class="mb-8 text-right">
-          <p class="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white">
-            Total: <span id="selected-plan-price" class="text-primary-600 dark:text-primary-400">
-              {defaultSku.currencySymbol}{defaultSku.price.toFixed(2)}
-            </span>
-          </p>
+          <p class="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white">Total: <span id="selected-plan-price" class="text-primary-600 dark:text-primary-400">{defaultSku.currencySymbol}{defaultSku.price.toFixed(2)}</span></p>
         </div>
 
         <div id="stripe-checkout-button-container">
-          <button type="button" id="checkout-button-placeholder" data-price-id-default={defaultSku.id} class="w-full btn-base bg-green-600 hover:bg-green-700 ...">
+          <button type="button" id="checkout-button-placeholder" data-price-id-default={defaultSku.stripePriceId || defaultSku.id} class="w-full btn-base bg-green-600 hover:bg-green-700 text-white font-bold py-3.5 px-6 rounded-lg text-lg shadow-md hover:shadow-lg flex items-center justify-center">
             <i class="fas fa-credit-card mr-2"></i> Proceed to Checkout
           </button>
-          <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
-            Secure payment via Stripe.
-          </p>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">Secure payment via Stripe.</p>
         </div>
         
-        {/* SKU 选择的客户端脚本 */}
-        <script define:vars={{ initialSkus: skus, defaultSkuId: defaultSku.id }}>
-          // ... 这部分脚本与上一版本完全相同，用于更新价格和处理SKU选择 ...
-          const productSkus = initialSkus; 
-          const skuRadiosContainer = document.getElementById('sku-radios-container');
-          const selectedPlanPriceEl = document.getElementById('selected-plan-price');
-          const checkoutButton = document.getElementById('checkout-button-placeholder');
+        <!-- SKU 选择和价格更新的客户端脚本 -->
+        <script>
+          document.addEventListener('DOMContentLoaded', () => {
+            const skuRadiosContainer = document.getElementById('sku-radios-container');
+            const selectedPlanPriceEl = document.getElementById('selected-plan-price');
+            const checkoutButton = document.getElementById('checkout-button-placeholder');
 
-          function updatePriceAndButton(selectedSkuId) { /* ... */ }
+            function updateSelection(selectedRadio) {
+              if (!selectedRadio) return;
+              
+              const parentLabel = selectedRadio.closest('label');
+              if (!parentLabel || !selectedPlanPriceEl) return;
+              
+              const priceTextEl = parentLabel.querySelector('[id^="sku-price-"]');
+              if (priceTextEl) {
+                selectedPlanPriceEl.textContent = priceTextEl.textContent;
+              }
+              
+              const skuData = JSON.parse(selectedRadio.dataset.skuData || '{}');
+              if (checkoutButton && (skuData.stripePriceId || skuData.id)) {
+                checkoutButton.setAttribute('data-price-id', skuData.stripePriceId || skuData.id);
+              }
+            }
 
-          if (skuRadiosContainer) {
-            skuRadiosContainer.addEventListener('change', (event) => { /* ... */ });
-          }
-          
-          if (checkoutButton) {
-            checkoutButton.addEventListener('click', async () => { /* ... 示例Stripe逻辑 ... */ });
-          }
+            if (skuRadiosContainer) {
+              skuRadiosContainer.addEventListener('change', (event) => {
+                const target = event.target as HTMLInputElement;
+                if (target.name === 'selected_sku' && target.checked) {
+                  updateSelection(target);
+                }
+              });
+            }
+
+            if (checkoutButton) {
+              checkoutButton.addEventListener('click', () => {
+                const selectedRadio = document.querySelector('input[name="selected_sku"]:checked') as HTMLInputElement;
+                if (!selectedRadio) {
+                  alert('Please select a plan first.');
+                  return;
+                }
+
+                const skuData = JSON.parse(selectedRadio.dataset.skuData || '{}');
+                alert(`Placeholder: Redirect to Stripe checkout for:\nDuration: ${skuData.duration}\nPrice: ${selectedPlanPriceEl.textContent}\nStripe Price ID: ${checkoutButton.getAttribute('data-price-id')}`);
+              });
+            }
+          });
         </script>
       </div>
     </div>
 
-    {/* Product Description Section */}
-    <div class="mt-16 md:mt-20 pt-10 border-t border-gray-200 dark:border-gray-700 fade-in-section" style="animation-delay: 200ms;">
+    <!-- ==================== 产品描述和相关产品区域 ==================== -->
+    <div class="mt-16 md:mt-20 pt-10 border-t border-gray-200 dark:border-gray-700">
       <article class="prose dark:prose-invert max-w-none lg:prose-lg text-gray-700 dark:text-gray-300 mx-auto">
         <div set:html={longDescription} />
       </article>
     </div>
 
-    {/* Related Products Section */}
     {relatedProducts.length > 0 && (
-      <div class="mt-16 md:mt-20 pt-10 border-t border-gray-200 dark:border-gray-700 fade-in-section" style="animation-delay: 300ms;">
+      <div class="mt-16 md:mt-20 pt-10 border-t border-gray-200 dark:border-gray-700">
         <h2 class="text-2xl md:text-3xl font-semibold text-center text-gray-900 dark:text-white mb-8 md:mb-10">You Might Also Like</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {relatedProducts.map(related => <ProductCardHome product={related} loading="lazy"/>)}
@@ -193,11 +190,6 @@ const relatedProducts = getRandomProducts(3, slug);
     )}
   </div>
 </Layout>
-
-<script>
-  // 淡入动画的 IntersectionObserver (与首页相同)
-  document.addEventListener('DOMContentLoaded', () => { /* ... */ });
-</script>
 <style>
   /* 图片库主图的透明度过渡效果 */
   #main-product-image {
