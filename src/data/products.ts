@@ -61,10 +61,10 @@ export const productsData: Product[] = [
     `,
     features: ['Personal Account', 'Millions of Songs', 'Personalized Recommendations'],
     skus: [
-      { id: 'sp-1m', duration: '1 Month', price: 3.99, currency: 'USD', currencySymbol: '$', stripePriceId: 'YOUR_STRIPE_PRICE_ID_HERE' },
-      { id: 'sp-3m', duration: '3 Months', price: 10.99, currency: 'USD', currencySymbol: '$', stripePriceId: 'YOUR_STRIPE_PRICE_ID_HERE' },
-      { id: 'sp-6m', duration: '6 Months', price: 20.99, currency: 'USD', currencySymbol: '$', stripePriceId: 'YOUR_STRIPE_PRICE_ID_HERE' },
-      { id: 'sp-12m', duration: '12 Months', price: 39.99, currency: 'USD', currencySymbol: '$', stripePriceId: 'YOUR_STRIPE_PRICE_ID_HERE' },
+      { id: 'sp-1m', duration: '1 Month', price: 3.99, currency: 'USD', currencySymbol: '$', stripePriceId: 'price_1RXJ4vJuY2t8VoKmzJ63uOQa' },
+      { id: 'sp-3m', duration: '3 Months', price: 9, currency: 'USD', currencySymbol: '$', stripePriceId: 'price_1RXJ4vJuY2t8VoKmNsB3wQFh' },
+      { id: 'sp-6m', duration: '6 Months', price: 19, currency: 'USD', currencySymbol: '$', stripePriceId: 'price_1RXJ4vJuY2t8VoKmedObBOFN' },
+      { id: 'sp-12m', duration: '12 Months', price: 25, currency: 'USD', currencySymbol: '$', stripePriceId: 'price_1RXJ4vJuY2t8VoKmfVyHl3VT' },
     ],
     listImage: '/images/products/cards/spotify-card.png',
     galleryImages: [

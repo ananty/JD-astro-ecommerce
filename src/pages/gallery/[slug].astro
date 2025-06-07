@@ -1,0 +1,43 @@
+---
+// src/pages/gallery/[slug].astro
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+// getStaticPaths 会为 `src/content/gallery` 下的每个文件生成一个页面
+export async function getStaticPaths() {
+  const allPosts = await getCollection('gallery');
+  return allPosts.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+type Props = {
+  entry: CollectionEntry<'gallery'>;
+};
+
+const { entry } = Astro.props;
+const { Content } = await entry.render(); // 渲染 Markdown 内容
+const { title, description, pinterestImage, publishDate } = entry.data;
+---
+<Layout title={title} description={description}>
+  <article class="container mx-auto px-4 py-12 md:py-16">
+    <div class="max-w-4xl mx-auto">
+      {/* 特色图片 */}
+      <div class="aspect-video rounded-lg overflow-hidden mb-8 shadow-lg">
+        <img src={pinterestImage} alt={title} class="w-full h-full object-cover" />
+      </div>
+
+      {/* 标题和元数据 */}
+      <header class="mb-8">
+        <h1 class="text-3xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-4">{title}</h1>
+        <p class="text-gray-500 dark:text-gray-400">Published on {publishDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+      </header>
+
+      {/* 文章内容 */}
+      <div class="prose dark:prose-invert lg:prose-xl max-w-none">
+        <Content />
+      </div>
+    </div>
+  </article>
+</Layout>

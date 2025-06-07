@@ -124,52 +124,78 @@ const relatedProducts = getRandomProducts(3, slug);
         </div>
         
         <!-- SKU 选择和价格更新的客户端脚本 -->
-        <script>
-          document.addEventListener('DOMContentLoaded', () => {
-            const skuRadiosContainer = document.getElementById('sku-radios-container');
-            const selectedPlanPriceEl = document.getElementById('selected-plan-price');
-            const checkoutButton = document.getElementById('checkout-button-placeholder');
+        <!-- 在 [slug].astro 的产品购买区域 -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // --- 1. 初始化 Stripe ---
+    // 将 'YOUR_STRIPE_PUBLISHABLE_KEY' 替换为你的真实可发布密钥 (pk_test_...)
+    const stripe = Stripe('pk_test_51RUOTAJuY2t8VoKm9iHEXtgskQWJ29a9apDOL7ahKjeKNqqdQ1bsnJrOS0bUtdnSFdE9UdBhKG9D8eYU6kprFlbS00V5ndcXEr'); 
 
-            function updateSelection(selectedRadio) {
-              if (!selectedRadio) return;
-              
-              const parentLabel = selectedRadio.closest('label');
-              if (!parentLabel || !selectedPlanPriceEl) return;
-              
-              const priceTextEl = parentLabel.querySelector('[id^="sku-price-"]');
-              if (priceTextEl) {
-                selectedPlanPriceEl.textContent = priceTextEl.textContent;
-              }
-              
-              const skuData = JSON.parse(selectedRadio.dataset.skuData || '{}');
-              if (checkoutButton && (skuData.stripePriceId || skuData.id)) {
-                checkoutButton.setAttribute('data-price-id', skuData.stripePriceId || skuData.id);
-              }
-            }
+    const skuRadiosContainer = document.getElementById('sku-radios-container');
+    const selectedPlanPriceEl = document.getElementById('selected-plan-price');
+    const checkoutButton = document.getElementById('checkout-button-placeholder');
 
-            if (skuRadiosContainer) {
-              skuRadiosContainer.addEventListener('change', (event) => {
-                const target = event.target as HTMLInputElement;
-                if (target.name === 'selected_sku' && target.checked) {
-                  updateSelection(target);
-                }
-              });
-            }
+    // --- 2. 价格和按钮更新逻辑 (保持不变) ---
+    function updateSelection(selectedRadio) {
+      if (!selectedRadio) return;
+      const parentLabel = selectedRadio.closest('label');
+      if (!parentLabel || !selectedPlanPriceEl) return;
+      const priceTextEl = parentLabel.querySelector('[id^="sku-price-"]');
+      if (priceTextEl) {
+        selectedPlanPriceEl.textContent = priceTextEl.textContent;
+      }
+      const skuData = JSON.parse(selectedRadio.dataset.skuData || '{}');
+      if (checkoutButton && (skuData.stripePriceId || skuData.id)) {
+        checkoutButton.setAttribute('data-price-id', skuData.stripePriceId || skuData.id);
+      }
+    }
 
-            if (checkoutButton) {
-              checkoutButton.addEventListener('click', () => {
-                const selectedRadio = document.querySelector('input[name="selected_sku"]:checked') as HTMLInputElement;
-                if (!selectedRadio) {
-                  alert('Please select a plan first.');
-                  return;
-                }
+    if (skuRadiosContainer) {
+      skuRadiosContainer.addEventListener('change', (event) => {
+        const target = event.target as HTMLInputElement;
+        if (target.name === 'selected_sku' && target.checked) {
+          updateSelection(target);
+        }
+      });
+    }
 
-                const skuData = JSON.parse(selectedRadio.dataset.skuData || '{}');
-                alert(`Placeholder: Redirect to Stripe checkout for:\nDuration: ${skuData.duration}\nPrice: ${selectedPlanPriceEl.textContent}\nStripe Price ID: ${checkoutButton.getAttribute('data-price-id')}`);
-              });
-            }
+    // --- 3. 为 Checkout 按钮添加真实的 Stripe 点击事件 ---
+    if (checkoutButton) {
+      checkoutButton.addEventListener('click', async () => {
+        const priceId = checkoutButton.getAttribute('data-price-id');
+        if (!priceId || priceId === 'YOUR_STRIPE_PRICE_ID_HERE') {
+          alert('Error: Stripe Price ID not configured for this plan. Please contact support.');
+          return;
+        }
+
+        checkoutButton.textContent = 'Redirecting...';
+        checkoutButton.disabled = true;
+
+        try {
+          const result = await stripe.redirectToCheckout({
+            lineItems: [{ price: priceId, quantity: 1 }],
+            mode: 'payment', // 'payment' 对应一次性购买, 'subscription' 对应周期性
+            // 确保这里的域名和你 astro.config.mjs 中配置的 site 一致 (上线后)
+            // 在本地开发时，Stripe 会自动处理 localhost
+            successUrl: `${window.location.origin}/success`,
+            cancelUrl: window.location.href, // 用户取消后返回当前产品页
           });
-        </script>
+
+          if (result.error) {
+            alert(result.error.message);
+            checkoutButton.textContent = 'Proceed to Checkout';
+            checkoutButton.disabled = false;
+          }
+        } catch (error) {
+          console.error("Stripe redirect failed:", error);
+          alert("Could not redirect to Stripe. Please try again.");
+          checkoutButton.textContent = 'Proceed to Checkout';
+          checkoutButton.disabled = false;
+        }
+      });
+    }
+  });
+</script>
       </div>
     </div>
 

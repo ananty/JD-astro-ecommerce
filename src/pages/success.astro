@@ -1,0 +1,68 @@
+---
+// src/pages/success.astro
+import Layout from '../layouts/Layout.astro';
+
+// --- 页面元数据 ---
+const pageTitle = "Payment Successful!";
+const pageDescription = "Thank you for your purchase. Your order is being processed and details will be sent to your email shortly.";
+
+// --- 在这里配置你的联系方式 ---
+// 请将 YOUR_WHATSAPP_NUMBER 替换为你的WhatsApp号码，格式为：国家代码+号码，不要有+、-或空格
+// 例如: 15551234567 (美国的号码) 或 8613812345678 (中国的号码)
+const whatsappContactLink = "https://wa.me/YOUR_WHATSAPP_NUMBER"; 
+
+// (可选) 如果你想显示一个二维码让用户扫描，请先生成你的WhatsApp联系二维码
+// 然后将图片放入 public/images/ 目录下，并在这里更新路径
+const whatsappQrCodeUrl = "/images/whatsapp-qr.png"; 
+---
+<Layout title={pageTitle} description={pageDescription}>
+  <section class="py-16 md:py-24 bg-white dark:bg-gray-900">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="max-w-2xl mx-auto bg-gray-50 dark:bg-gray-800/50 p-8 rounded-xl shadow-lg">
+        
+        {/* 1. 成功图标 */}
+        <div class="text-green-500 mb-6 animate-pulse">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        
+        {/* 2. 主标题 */}
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          Thank You For Your Purchase!
+        </h1>
+        
+        {/* 3. 核心信息 */}
+        <p class="text-lg text-gray-600 dark:text-gray-400 mb-8">
+          Your order has been confirmed. Please check your email in the next **5-15 minutes** for your account details and setup instructions.
+        </p>
+
+        {/* 4. 售后支持引导 */}
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+          <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">Need Help or Have Questions?</h2>
+          <p class="text-gray-600 dark:text-gray-400 mb-5">
+            For the fastest support, please contact us via WhatsApp.
+          </p>
+          <a 
+            href={whatsappContactLink} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="btn-base inline-flex items-center justify-center w-full sm:w-auto bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition-transform transform hover:scale-105"
+          >
+            <i class="fab fa-whatsapp text-xl mr-2"></i> Chat on WhatsApp
+          </a>
+          {/* 如果你想显示二维码，可以取消下面这行注释 */}
+          {/* <img src={whatsappQrCodeUrl} alt="WhatsApp QR Code" class="w-28 h-28 rounded-md shadow-sm mt-4 mx-auto"/> */}
+        </div>
+        
+        {/* 5. 返回首页链接 */}
+        <div class="mt-12">
+          <a href="/" class="text-primary-600 dark:text-primary-400 hover:underline font-medium transition-colors">
+            ← Back to Homepage
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</Layout>

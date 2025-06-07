@@ -1,0 +1,35 @@
+---
+// src/pages/404.astro
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "404 - Page Not Found";
+const pageDescription = "The page you are looking for does not exist.";
+---
+<Layout title={pageTitle} description={pageDescription}>
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 text-center">
+    <div class="max-w-md mx-auto">
+      
+      <p class="text-6xl md:text-8xl font-extrabold text-primary-600 dark:text-primary-400 mb-4">
+        404
+      </p>
+
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        Oops! Page Not Found.
+      </h1>
+
+      <p class="text-lg text-gray-600 dark:text-gray-400 mb-8">
+        We're sorry, but the page you were looking for could not be found. It might have been removed, had its name changed, or is temporarily unavailable.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="/" class="btn-base w-full sm:w-auto bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md">
+          ← Go Back Home
+        </a>
+        <a href="/contact" class="btn-base w-full sm:w-auto bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-semibold py-3 px-6 rounded-lg">
+          Contact Us
+        </a>
+      </div>
+
+    </div>
+  </div>
+</Layout>

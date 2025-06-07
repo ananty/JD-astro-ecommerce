@@ -1,0 +1,39 @@
+---
+// src/pages/gallery/index.astro
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+// 获取所有 'gallery' 集合中的文章，并按发布日期降序排序
+const allPosts = await getCollection('gallery');
+const sortedPosts = allPosts.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+
+const pageTitle = "Inspiration Gallery";
+const pageDescription = "Explore our gallery of tips, guides, and inspiration for your favorite digital services.";
+---
+<Layout title={pageTitle} description={pageDescription}>
+  <section class="py-16 md:py-24 bg-gray-50 dark:bg-gray-800/50 text-center">
+    <div class="container mx-auto px-4">
+      <h1 class="text-4xl font-bold">{pageTitle}</h1>
+      <p class="text-lg text-gray-600 dark:text-gray-400 mt-4">{pageDescription}</p>
+    </div>
+  </section>
+
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {sortedPosts.map(post => (
+          <a href={`/gallery/${post.slug}`} class="block group bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden card-base-hover transform hover:-translate-y-1 transition-transform">
+            <div class="aspect-video">
+              <img src={post.data.pinterestImage} alt={post.data.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" />
+            </div>
+            <div class="p-6">
+              <h2 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white group-hover:text-primary-600">{post.data.title}</h2>
+              <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">{post.data.description}</p>
+              <p class="text-xs text-gray-500">{post.data.publishDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

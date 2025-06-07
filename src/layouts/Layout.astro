@@ -148,6 +148,7 @@ const isHomePage = Astro.url.pathname === '/';
     // 但对于传统的多页面应用 (MPA) 或未使用 View Transitions 的 SPA，这是标准做法。
   </script>
   <slot name="head- допълнително" /> {/* 允许页面注入额外的head内容 */}
+  <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body class:list={["antialiased min-h-screen flex flex-col", bodyClass]}>
   {/* 

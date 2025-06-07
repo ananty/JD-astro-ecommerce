@@ -1,0 +1,8 @@
+# public/robots.txt
+
+# Allow all user agents to crawl the entire site.
+User-agent: *
+Allow: /
+
+# Point search engines to the sitemap.
+Sitemap: https://www.your-final-domain.com/sitemap-0.xml
