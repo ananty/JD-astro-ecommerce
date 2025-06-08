@@ -113,7 +113,7 @@ export const productsData: Product[] = [
     // SEO: alt 文本描述了图片内容
     galleryImages: [
       { src: '/images/products/gallery/spotify-1.png', alt: 'Spotify Premium interface on a desktop computer showing personalized playlists' },
-      { src: '/images/prods/gallery/spotify-2.png', alt: 'Spotify mobile app demonstrating the offline download feature for a playlist' },
+      { src: '/images/products/gallery/spotify-2.png', alt: 'Spotify mobile app demonstrating the offline download feature for a playlist' },
       { src: '/images/products/gallery/spotify-3.png', alt: 'Close-up of the high-quality audio settings in the Spotify app' },
     ],
   },
