@@ -1,7 +1,7 @@
 ---
-// src/pages/product/[slug].astro (最终完整版)
+// src/pages/product/[slug].astro (最终生产版)
 import Layout from '../../layouts/Layout.astro';
-import { productsData, getRandomProducts, type Product as ProductType, type Sku as SkuType } from '../../data/products';
+import { productsData, getRandomProducts, type Product as ProductType } from '../../data/products';
 import ProductCardHome from '../../components/ProductCardHome.astro';
 
 export async function getStaticPaths() {
@@ -17,14 +17,12 @@ if (!product) {
   return new Response(null, { status: 404, statusText: 'Not Found' });
 }
 
-// 安全地获取数据
 const { name, category, longDescription, skus, galleryImages, slug } = product;
 const defaultSku = skus && skus.length > 0 ? skus[0] : null;
 const mainImage = galleryImages && galleryImages.length > 0 ? galleryImages[0] : null;
 
-// 如果关键数据缺失，主动抛出错误
-if (!defaultSku) { throw new Error(`Product with slug "${slug}" has no SKUs defined in products.ts.`); }
-if (!mainImage) { throw new Error(`Product with slug "${slug}" has no galleryImages defined in products.ts.`); }
+if (!defaultSku) { throw new Error(`Product with slug "${slug}" has no SKUs.`); }
+if (!mainImage) { throw new Error(`Product with slug "${slug}" has no galleryImages.`); }
 
 const relatedProducts = getRandomProducts(3, slug);
 ---
@@ -36,7 +34,7 @@ const relatedProducts = getRandomProducts(3, slug);
       <div id="image-gallery" class="sticky top-24">
         <div>
           <div class="aspect-[4/3] mb-4 rounded-lg overflow-hidden shadow-xl bg-gray-100 dark:bg-gray-800">
-            <img id="main-product-image" src={mainImage.src} alt={mainImage.alt} class="w-full h-full object-cover transition-opacity duration-300 ease-in-out" loading="eager" width="800" height="600"/>
+            <img id="main-product-image" src={mainImage.src} alt={mainImage.alt} class="w-full h-full object-cover" loading="eager" width="800" height="600"/>
           </div>
           {galleryImages.length > 1 && (
             <div id="thumbnail-container" class="grid grid-cols-4 sm:grid-cols-5 gap-2 md:gap-3">
@@ -54,34 +52,6 @@ const relatedProducts = getRandomProducts(3, slug);
             </div>
           )}
         </div>
-        <script>
-          // 图片库交互脚本
-          const mainImageEl = document.getElementById('main-product-image') as HTMLImageElement;
-          const thumbnailContainer = document.getElementById('thumbnail-container');
-
-          if (mainImageEl && thumbnailContainer) {
-            const thumbnailButtons = thumbnailContainer.querySelectorAll('.thumbnail-button') as NodeListOf<HTMLButtonElement>;
-            
-            thumbnailContainer.addEventListener('click', (event) => {
-              const targetButton = (event.target as HTMLElement).closest('.thumbnail-button') as HTMLButtonElement | null;
-              if (!targetButton) return;
-
-              const newSrc = targetButton.dataset.largeSrc;
-              const newAlt = targetButton.dataset.largeAlt;
-              if (newSrc && newAlt && mainImageEl.src !== newSrc) {
-                mainImageEl.style.opacity = '0';
-                setTimeout(() => {
-                  mainImageEl.src = newSrc;
-                  mainImageEl.alt = newAlt;
-                  mainImageEl.style.opacity = '1';
-                }, 150);
-              }
-
-              thumbnailButtons.forEach(btn => btn.classList.replace('border-primary-500', 'border-transparent'));
-              targetButton.classList.replace('border-transparent', 'border-primary-500');
-            });
-          }
-        </script>
       </div>
 
       <!-- ==================== Product Details & Purchase Section ==================== -->
@@ -117,89 +87,14 @@ const relatedProducts = getRandomProducts(3, slug);
         </div>
 
         <div id="stripe-checkout-button-container">
-          <button type="button" id="checkout-button-placeholder" data-price-id-default={defaultSku.stripePriceId || defaultSku.id} class="w-full btn-base bg-green-600 hover:bg-green-700 text-white font-bold py-3.5 px-6 rounded-lg text-lg shadow-md hover:shadow-lg flex items-center justify-center">
+          <button type="button" id="checkout-button-placeholder" data-price-id={defaultSku.stripePriceId || defaultSku.id} data-product-slug={slug} class="w-full btn-base bg-green-600 hover:bg-green-700 text-white font-bold py-3.5 px-6 rounded-lg text-lg shadow-md hover:shadow-lg flex items-center justify-center">
             <i class="fas fa-credit-card mr-2"></i> Proceed to Checkout
           </button>
           <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">Secure payment via Stripe.</p>
         </div>
-        
-        <!-- SKU 选择和价格更新的客户端脚本 -->
-        <!-- 在 [slug].astro 的产品购买区域 -->
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // --- 1. 初始化 Stripe ---
-    // 将 'YOUR_STRIPE_PUBLISHABLE_KEY' 替换为你的真实可发布密钥 (pk_test_...)
-    const stripe = Stripe('pk_test_51RUOTAJuY2t8VoKm9iHEXtgskQWJ29a9apDOL7ahKjeKNqqdQ1bsnJrOS0bUtdnSFdE9UdBhKG9D8eYU6kprFlbS00V5ndcXEr'); 
-
-    const skuRadiosContainer = document.getElementById('sku-radios-container');
-    const selectedPlanPriceEl = document.getElementById('selected-plan-price');
-    const checkoutButton = document.getElementById('checkout-button-placeholder');
-
-    // --- 2. 价格和按钮更新逻辑 (保持不变) ---
-    function updateSelection(selectedRadio) {
-      if (!selectedRadio) return;
-      const parentLabel = selectedRadio.closest('label');
-      if (!parentLabel || !selectedPlanPriceEl) return;
-      const priceTextEl = parentLabel.querySelector('[id^="sku-price-"]');
-      if (priceTextEl) {
-        selectedPlanPriceEl.textContent = priceTextEl.textContent;
-      }
-      const skuData = JSON.parse(selectedRadio.dataset.skuData || '{}');
-      if (checkoutButton && (skuData.stripePriceId || skuData.id)) {
-        checkoutButton.setAttribute('data-price-id', skuData.stripePriceId || skuData.id);
-      }
-    }
-
-    if (skuRadiosContainer) {
-      skuRadiosContainer.addEventListener('change', (event) => {
-        const target = event.target as HTMLInputElement;
-        if (target.name === 'selected_sku' && target.checked) {
-          updateSelection(target);
-        }
-      });
-    }
-
-    // --- 3. 为 Checkout 按钮添加真实的 Stripe 点击事件 ---
-    if (checkoutButton) {
-      checkoutButton.addEventListener('click', async () => {
-        const priceId = checkoutButton.getAttribute('data-price-id');
-        if (!priceId || priceId === 'YOUR_STRIPE_PRICE_ID_HERE') {
-          alert('Error: Stripe Price ID not configured for this plan. Please contact support.');
-          return;
-        }
-
-        checkoutButton.textContent = 'Redirecting...';
-        checkoutButton.disabled = true;
-
-        try {
-          const result = await stripe.redirectToCheckout({
-            lineItems: [{ price: priceId, quantity: 1 }],
-            mode: 'payment', // 'payment' 对应一次性购买, 'subscription' 对应周期性
-            // 确保这里的域名和你 astro.config.mjs 中配置的 site 一致 (上线后)
-            // 在本地开发时，Stripe 会自动处理 localhost
-            successUrl: `${window.location.origin}/success`,
-            cancelUrl: window.location.href, // 用户取消后返回当前产品页
-          });
-
-          if (result.error) {
-            alert(result.error.message);
-            checkoutButton.textContent = 'Proceed to Checkout';
-            checkoutButton.disabled = false;
-          }
-        } catch (error) {
-          console.error("Stripe redirect failed:", error);
-          alert("Could not redirect to Stripe. Please try again.");
-          checkoutButton.textContent = 'Proceed to Checkout';
-          checkoutButton.disabled = false;
-        }
-      });
-    }
-  });
-</script>
       </div>
     </div>
 
-    <!-- ==================== 产品描述和相关产品区域 ==================== -->
     <div class="mt-16 md:mt-20 pt-10 border-t border-gray-200 dark:border-gray-700">
       <article class="prose dark:prose-invert max-w-none lg:prose-lg text-gray-700 dark:text-gray-300 mx-auto">
         <div set:html={longDescription} />
@@ -216,9 +111,106 @@ const relatedProducts = getRandomProducts(3, slug);
     )}
   </div>
 </Layout>
+
+<!-- ==================== 页面所有客户端脚本 ==================== -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+
+    // --- 图片库脚本 ---
+    const mainImageEl = document.getElementById('main-product-image');
+    const thumbnailContainer = document.getElementById('thumbnail-container');
+
+    if (mainImageEl && thumbnailContainer) {
+      thumbnailContainer.addEventListener('click', (event) => {
+        const targetButton = event.target.closest('.thumbnail-button');
+        if (!targetButton) return;
+
+        const newSrc = targetButton.dataset.largeSrc;
+        if (newSrc && mainImageEl.src && !mainImageEl.src.endsWith(newSrc)) {
+          mainImageEl.classList.add('image-fade-out');
+
+          setTimeout(() => {
+            mainImageEl.src = newSrc;
+            mainImageEl.alt = targetButton.dataset.largeAlt;
+            mainImageEl.classList.remove('image-fade-out');
+          }, 150);
+        }
+
+        const thumbnailButtons = thumbnailContainer.querySelectorAll('.thumbnail-button');
+        thumbnailButtons.forEach(btn => btn.classList.replace('border-primary-500', 'border-transparent'));
+        targetButton.classList.replace('border-transparent', 'border-primary-500');
+      });
+    }
+
+    // --- SKU 选择和 Stripe 购买脚本 ---
+    const stripe = Stripe('pk_test_51RUOTAJuY2t8VoKm9iHEXtgskQWJ29a9apDOL7ahKjeKNqqdQ1bsnJrOS0bUtdnSFdE9UdBhKG9D8eYU6kprFlbS00V5ndcXEr'); // <-- 确保这里是你真实的测试公钥
+
+    const skuRadiosContainer = document.getElementById('sku-radios-container');
+    const selectedPlanPriceEl = document.getElementById('selected-plan-price');
+    const checkoutButton = document.getElementById('checkout-button-placeholder');
+
+    if (skuRadiosContainer && selectedPlanPriceEl) {
+      skuRadiosContainer.addEventListener('change', (event) => {
+        const target = event.target;
+        if (target.name === 'selected_sku' && target.checked) {
+          const parentLabel = target.closest('label');
+          const priceTextEl = parentLabel.querySelector('[id^="sku-price-"]');
+          if (priceTextEl) {
+            selectedPlanPriceEl.textContent = priceTextEl.textContent;
+          }
+          const skuData = JSON.parse(target.dataset.skuData || '{}');
+          if (checkoutButton && (skuData.stripePriceId || skuData.id)) {
+            checkoutButton.setAttribute('data-price-id', skuData.stripePriceId || skuData.id);
+          }
+        }
+      });
+    }
+
+    if (checkoutButton) {
+      checkoutButton.addEventListener('click', async () => {
+        const priceId = checkoutButton.getAttribute('data-price-id');
+        const productSlug = checkoutButton.getAttribute('data-product-slug'); // 从按钮获取slug
+
+        if (!priceId || priceId.includes('YOUR_STRIPE_PRICE_ID_HERE')) {
+          alert('Error: Stripe Price ID not configured for this plan.');
+          return;
+        }
+        
+        checkoutButton.textContent = 'Processing...';
+        checkoutButton.disabled = true;
+
+        try {
+          const response = await fetch('/api/create-checkout-session', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+              priceId: priceId,
+              productSlug: productSlug,
+              successUrl: `${window.location.origin}/success`,
+              cancelUrl: window.location.href,
+            }),
+          });
+          const { sessionId, error } = await response.json();
+          if (error) { throw new Error(error); }
+
+          const { error: stripeError } = await stripe.redirectToCheckout({ sessionId: sessionId });
+          if (stripeError) { throw stripeError; }
+        } catch (error) {
+          console.error("Checkout failed:", error);
+          alert(`Could not proceed to checkout. Please try again or contact support.`);
+          checkoutButton.textContent = 'Proceed to Checkout';
+          checkoutButton.disabled = false;
+        }
+      });
+    }
+  });
+</script>
+
 <style>
-  /* 图片库主图的透明度过渡效果 */
   #main-product-image {
     transition: opacity 0.3s ease-in-out;
+  }
+  .image-fade-out {
+    opacity: 0;
   }
 </style>

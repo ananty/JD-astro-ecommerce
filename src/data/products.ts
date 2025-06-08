@@ -33,44 +33,88 @@ export interface Product {
 export const productsData: Product[] = [
   {
     slug: 'spotify-premium',
-    name: 'Spotify Premium',
-    category: 'Music Streaming',
-    shortDescription: 'Your personal account with millions of songs and personalized recommendations.',
+    name: 'Spotify Premium Account', // SEO: 更有描述性的标题
+    category: 'Music Streaming Service', // SEO: 更具体的分类
+    shortDescription: 'Get your own personal Spotify Premium account. Enjoy ad-free music, offline downloads, and superior sound quality with full control.', // SEO: 包含核心价值点
+    
+    // SEO: 下面的 HTML 内容使用了 h2, h3, strong, ul/ol/dl 等语义化标签，并自然融入了关键词
     longDescription: `
-      <h2>Experience Music Like Never Before</h2>
+            <h2>Experience Music Like Never Before</h2>
       <p>With Spotify Premium, you get unlimited access to a world of music. Listen to your favorite artists, discover new tracks, and create personalized playlists for any mood or moment. This is your own private account, giving you full control.</p>
       
-      <h3>Key Features:</h3>
+      <h3>Key Features of Spotify Premium:</h3>
       <ul>
         <li><strong>Ad-Free Listening:</strong> Enjoy uninterrupted music without any ad breaks.</li>
         <li><strong>Offline Playback:</strong> Download your favorite songs and playlists to listen anywhere, even without an internet connection.</li>
         <li><strong>High-Quality Audio:</strong> Immerse yourself in superior sound quality.</li>
-        <li><strong>Full Control:</strong> This is a dedicated personal account. You can change the email, password, and settings.</li>
+        <li><strong>Full Account Control:</strong> This is a dedicated personal account. You can change the password and settings immediately after activation.</li>
       </ul>
 
-      <h2>Before You Buy</h2>
-      <p>Please note that this is a subscription service activated on a new or your provided account details. A full warranty is provided for the entire duration of your purchase. Our support team is available 24/7 to assist with any setup questions.</p>
-      
+      <h2>Important Information: Before You Buy</h2>
+      <ol>
+        <li><strong>Official & Affordable Plan:</strong> To offer you the best value, your account will be added to an official family plan based in regions like India or Nigeria.</li>
+        <li><strong>Account Region Change Process:</strong> For the initial setup, we need to change your account's region. Therefore, we will require your account password. Once the subscription is activated, you are strongly encouraged to change your password immediately for your security.</li>
+        <li><strong>12-Month Eligibility Rule:</strong> As per Spotify's official policy, your account must not have been a member of any other family group within the last 12 months.</li>
+      </ol>
+
       <h2>Frequently Asked Questions (FAQ)</h2>
-      <dl>
-        <dt>Q: How quickly will I receive my account?</dt>
-        <dd>A: Account details are typically delivered to your email within 5-15 minutes after payment confirmation.</dd>
-        <dt>Q: Is this a shared or family account?</dt>
-        <dd>A: No, this is a private, personal premium account just for you.</dd>
-      </dl>
+      <div class="faq-accordion">
+        <details>
+          <summary>What if I don't have a Spotify account?</summary>
+          <div class="faq-content">
+            <p>No problem at all! We will create a brand new, official Spotify account for you at no extra cost. Simply choose this option on the secure checkout page and provide an email for registration.</p>
+          </div>
+        </details>
+        <details>
+          <summary>How do I provide my password if I log in with Facebook, Google, or Apple?</summary>
+          <div class="faq-content">
+            <p>That's easy. Please visit Spotify's official <a href="https://www.spotify.com/account/set-device-password/" target="_blank" rel="noopener noreferrer">"Set a device password"</a> page. This allows you to create a unique password for Spotify itself, which you can then securely provide on our checkout page along with your Spotify username.</p>
+          </div>
+        </details>
+        <details>
+          <summary>What's the difference between Spotify India region and others?</summary>
+          <div class="faq-content">
+            <p>The music library is virtually identical. The main differences are in regional charts and some exclusive content, but this is minimal. Your personalized recommendations are based entirely on your personal listening history, not the account's region.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Can I buy if my current account is from a different region?</summary>
+          <div class="faq-content">
+            <p>Absolutely. We handle the entire region change process for you. Just provide your account login details on the secure checkout page, and we'll take care of the rest.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Can I purchase if my trial or subscription hasn't expired yet?</summary>
+          <div class="faq-content">
+            <p>No, an active trial or subscription prevents the required region change. Please either wait for your current subscription to expire or provide a different account. If you've already purchased, we can also register a new account for you.</p>
+          </div>
+        </details>
+      </div>
+
+      <hr>
+      <div class="customer-support-cta">
+        <h4>Still Have Questions?</h4>
+        <p>If you have any inquiries about our Spotify Premium plans, please do not hesitate to <a href="/contact">contact our customer support</a>.</p>
+      </div>
     `,
-    features: ['Personal Account', 'Millions of Songs', 'Personalized Recommendations'],
+    
+    // SEO: 特性列表简洁明了，突出核心卖点
+    features: ['Personal Account', 'Full Control', 'Ad-Free Music', 'Offline Listening'],
+    
+    // 更新了价格，并假设了新的 Stripe Price ID
     skus: [
-      { id: 'sp-1m', duration: '1 Month', price: 3.99, currency: 'USD', currencySymbol: '$', stripePriceId: 'price_1RXJ4vJuY2t8VoKmzJ63uOQa' },
-      { id: 'sp-3m', duration: '3 Months', price: 9, currency: 'USD', currencySymbol: '$', stripePriceId: 'price_1RXJ4vJuY2t8VoKmNsB3wQFh' },
-      { id: 'sp-6m', duration: '6 Months', price: 19, currency: 'USD', currencySymbol: '$', stripePriceId: 'price_1RXJ4vJuY2t8VoKmedObBOFN' },
-      { id: 'sp-12m', duration: '12 Months', price: 25, currency: 'USD', currencySymbol: '$', stripePriceId: 'price_1RXJ4vJuY2t8VoKmfVyHl3VT' },
+      { id: 'sp-3m', duration: '3 Months', price: 9.00, currency: 'USD', currencySymbol: '$', stripePriceId: 'REPLACE_WITH_YOUR_NEW_3M_PRICE_ID' },
+      { id: 'sp-6m', duration: '6 Months', price: 15.00, currency: 'USD', currencySymbol: '$', stripePriceId: 'REPLACE_WITH_YOUR_NEW_6M_PRICE_ID' },
+      { id: 'sp-12m', duration: '12 Months', price: 25.00, currency: 'USD', currencySymbol: '$', stripePriceId: 'REPLACE_WITH_YOUR_NEW_12M_PRICE_ID' },
     ],
+    
     listImage: '/images/products/cards/spotify-card.png',
+    
+    // SEO: alt 文本描述了图片内容
     galleryImages: [
-      { src: '/images/products/gallery/spotify-1.png', alt: 'Spotify Premium interface on a desktop computer' },
-      { src: '/images/products/gallery/spotify-2.png', alt: 'Spotify mobile app showing a playlist' },
-      { src: '/images/products/gallery/spotify-3.png', alt: 'Offline playback feature demonstration' },
+      { src: '/images/products/gallery/spotify-1.png', alt: 'Spotify Premium interface on a desktop computer showing personalized playlists' },
+      { src: '/images/prods/gallery/spotify-2.png', alt: 'Spotify mobile app demonstrating the offline download feature for a playlist' },
+      { src: '/images/products/gallery/spotify-3.png', alt: 'Close-up of the high-quality audio settings in the Spotify app' },
     ],
   },
   {

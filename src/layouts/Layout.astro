@@ -93,7 +93,36 @@ const isHomePage = Astro.url.pathname === '/';
     .fade-in-section.is-visible {
       animation: fadeIn 0.7s ease-out forwards;
     }
+/* 在 src/layouts/Layout.astro 的 <style is:global> 中添加 */
 
+/* --- FAQ Accordion Styles --- */
+.faq-accordion details {
+  @apply border-b border-gray-200 dark:border-gray-700 py-3;
+}
+
+.faq-accordion summary {
+  @apply font-semibold text-lg cursor-pointer list-none flex justify-between items-center;
+  @apply text-gray-800 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors;
+}
+
+.faq-accordion summary::-webkit-details-marker {
+  display: none; /* 隐藏 Chrome/Safari 默认的三角箭头 */
+}
+
+.faq-accordion summary::after {
+  content: '+';
+  @apply text-2xl font-light text-gray-500 dark:text-gray-400;
+  transition: transform 0.2s ease-in-out;
+}
+
+.faq-accordion details[open] > summary::after {
+  content: '−';
+  transform: rotate(180deg);
+}
+
+.faq-accordion .faq-content {
+  @apply pt-2 pb-1 text-gray-600 dark:text-gray-300;
+}
     /* 按钮和卡片悬停效果的基类 (示例) */
     .btn-base {
       @apply transition-all duration-200 ease-in-out transform;

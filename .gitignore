@@ -7,3 +7,16 @@ build-product/
 dist/
 package-lock.json
 .astro/
+# .gitignore
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Astro build & cache
+.astro/
+dist/
+
+# Dependencies
+node_modules/
