@@ -326,7 +326,7 @@ export const productsData: Product[] = [
     
     // 价格已更新
     skus: [
-      { id: 'duo-12m', duration: '12 Months', price: 8.00, currency: 'USD', currencySymbol: '$', stripePriceId: 'REPLACE_WITH_DUOLINGO_12M_PRICE_ID' },
+      { id: 'duo-12m', duration: '12 Months', price: 7.00, currency: 'USD', currencySymbol: '$', stripePriceId: 'REPLACE_WITH_DUOLINGO_12M_PRICE_ID' },
     ],
     
     listImage: '/images/products/cards/duolingo-card.png',

@@ -13,10 +13,10 @@ const firstSku = product.skus[0]; // 获取第一个SKU用于显示起价
 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-all duration-300 ease-in-out hover:shadow-2xl transform hover:-translate-y-1 flex flex-col card-base-hover">
   {/* 产品图片链接到产品详情页 */}
   <a href={`/product/${product.slug}`} aria-label={`View details for ${product.name}`} class="block aspect-[16/10] overflow-hidden">
-    {product.imageUrl ? (
+    {product.listImage ? (
       <img 
         class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" 
-        src={product.imageUrl} 
+        src={product.listImage} 
         alt={`Image of ${product.name}`} 
         loading={loading}
         width="400" height="250" {/* 提供宽高比有助于浏览器布局 */}
