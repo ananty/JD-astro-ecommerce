@@ -1,0 +1,87 @@
+---
+// src/pages/products.astro (新方案 - 内联卡片渲染)
+import Layout from '../layouts/Layout.astro';
+import { productsData } from '../data/products';
+
+const pageTitle = "All Products | Jaideepas";
+const pageDescription = "Explore our full catalog of premium digital subscriptions, including Spotify, Netflix, Microsoft 365, and more. Find the best plan for your needs.";
+---
+<Layout title={pageTitle} description={pageDescription}>
+  
+  {/* 1. Hero Section - 页面标题 */}
+  <section class="py-16 md:py-20 bg-gray-50 dark:bg-gray-800/50 text-center">
+    <div class="container mx-auto px-4">
+      <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white">Our Services</h1>
+      <p class="mt-4 text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+        Find the perfect plan from our curated selection of premium subscriptions.
+      </p>
+    </div>
+  </section>
+
+  {/* 2. Products Grid Section - 直接渲染所有产品 */}
+  <section class="py-16 md:py-20 bg-white dark:bg-gray-900">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        {productsData.map((product, index) => {
+          // 在循环内部安全地获取第一个 SKU
+          const firstSku = product.skus && product.skus.length > 0 ? product.skus[0] : null;
+          const loading = index < 6 ? 'eager' : 'lazy';
+
+          return (
+            // ==================== 卡片 HTML 直接写在这里 ====================
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-all duration-300 ease-in-out hover:shadow-2xl transform hover:-translate-y-1 flex flex-col group card-base-hover">
+              
+              <a href={`/product/${product.slug}`} aria-label={`View details for ${product.name}`} class="block aspect-[16/10] overflow-hidden">
+                {product.listImage ? (
+                  <img 
+                    class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" 
+                    src={product.listImage} 
+                    alt={`Image for ${product.name}`} 
+                    loading={loading}
+                    width="400" height="250"
+                  />
+                ) : (
+                  <div class="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                    <span class="text-gray-500 dark:text-gray-400">No Image</span>
+                  </div>
+                )}
+              </a>
+            
+              <div class="p-5 md:p-6 flex flex-col flex-grow">
+                <h3 class="text-lg md:text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                  <a href={`/product/${product.slug}`} class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                    {product.name}
+                  </a>
+                </h3>
+            
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow min-h-[4rem]">
+                  {product.shortDescription}
+                </p>
+                
+                <div class="mb-4">
+                  {firstSku ? (
+                    <p class="text-md font-semibold text-gray-800 dark:text-gray-200">
+                      From <span class="text-primary-600 dark:text-primary-400">{firstSku.currencySymbol}{firstSku.price.toFixed(2)}</span>
+                    </p>
+                  ) : (
+                    <p class="text-sm text-gray-500">Pricing not available</p>
+                  )}
+                </div>
+                
+                <a 
+                  href={`/product/${product.slug}`} 
+                  class="mt-auto btn-base w-full text-center bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 text-white font-semibold py-2.5 px-4 rounded-lg shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50"
+                >
+                  View Details
+                  <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                </a>
+              </div>
+            </div>
+            // ===============================================================
+          );
+        })}
+      </div>
+    </div>
+  </section>
+</Layout>

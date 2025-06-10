@@ -1,14 +1,12 @@
 ---
-// src/components/Navbar.astro (最终修正版 - 修复404链接)
+// src/components/Navbar.astro (最终版 - 优化移动端下拉交互)
 import ThemeToggle from './ThemeToggle.astro';
 import { productsData } from '../data/products';
 
 const navLinks = [
   { href: "/", label: "Home" },
   { 
-    // 对于桌面端，父链接指向第一个产品作为默认着陆点
-    // 对于移动端，这个 href 不会被用在按钮上
-    href: `/product/${productsData[0]?.slug || ''}`, 
+    href: "/products", // 主链接指向产品列表页
     label: "Products",
     isDropdown: true,
     dropdownItems: productsData.map(p => ({ 
@@ -26,7 +24,7 @@ const logoUrl = "/images/logo.svg";
   <nav class="container mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
     <div class="flex items-center justify-between h-16 md:h-20">
       
-      {/* 左侧 Logo */}
+      <!-- 左侧 Logo -->
       <div class="flex-shrink-0">
         <a href="/" class="flex items-center group" aria-label="Go to homepage">
           <img class="h-8 w-auto md:h-10 group-hover:opacity-80 transition-opacity" src={logoUrl} alt={`${siteTitle} Logo`} />
@@ -34,7 +32,7 @@ const logoUrl = "/images/logo.svg";
         </a>
       </div>
 
-      {/* 右侧容器 */}
+      <!-- 右侧容器 -->
       <div class="flex items-center">
         <!-- 桌面导航 -->
         <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
@@ -47,7 +45,7 @@ const logoUrl = "/images/logo.svg";
             ) : (
               // 带下拉菜单的链接 (桌面)
               <div class="relative group">
-                <a href={link.href} class:list={["px-3 py-2 rounded-md text-sm lg:text-base font-medium flex items-center gap-1 transition-colors", Astro.url.pathname.startsWith('/product') ? "text-primary-600 dark:text-primary-400" : "text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400"]}>
+                <a href={link.href} class:list={["px-3 py-2 rounded-md text-sm lg:text-base font-medium flex items-center gap-1 transition-colors", Astro.url.pathname.startsWith('/product') || Astro.url.pathname === '/products' ? "text-primary-600 dark:text-primary-400" : "text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400"]}>
                   {link.label}
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform group-hover:rotate-180" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
                 </a>
@@ -67,6 +65,7 @@ const logoUrl = "/images/logo.svg";
 
         <div class="md:hidden ml-2">
           <button id="mobile-menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open main menu">
+            <span class="sr-only">Open main menu</span>
             <svg class="block h-6 w-6" id="menu-icon-open" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
             <svg class="hidden h-6 w-6" id="menu-icon-close" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
           </button>
@@ -83,10 +82,13 @@ const logoUrl = "/images/logo.svg";
           <a href={link.href} class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">{link.label}</a>
         ) : (
           <div class="relative">
-            <button class="w-full flex justify-between items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800" aria-expanded="false" aria-controls={`mobile-dropdown-${link.label}`}>
-              <span>{link.label}</span>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
-            </button>
+            <div class="flex justify-between items-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+              <a href={link.href} class="flex-grow px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300">{link.label}</a>
+              <button class="flex-shrink-0 p-3" aria-expanded="false" aria-controls={`mobile-dropdown-${link.label}`}>
+                <span class="sr-only">Toggle submenu for {link.label}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform text-gray-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+              </button>
+            </div>
             <div id={`mobile-dropdown-${link.label}`} class="hidden mt-1 pl-4 space-y-1">
               {link.dropdownItems.map(item => (
                 <a href={item.href} class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800">{item.label}</a>
@@ -119,12 +121,16 @@ const logoUrl = "/images/logo.svg";
   // 移动端下拉子菜单的交互逻辑
   document.querySelectorAll('#mobile-menu button').forEach(button => {
     button.addEventListener('click', (event) => {
-      const dropdown = button.nextElementSibling;
+      const dropdownId = button.getAttribute('aria-controls');
+      if (!dropdownId) return;
+
+      const dropdown = document.getElementById(dropdownId);
       const arrow = button.querySelector('svg');
-      if (dropdown && dropdown.tagName === 'DIV') {
+      
+      if (dropdown) {
         event.preventDefault(); // 阻止可能的默认行为
         const isHidden = dropdown.classList.toggle('hidden');
-        button.setAttribute('aria-expanded', !isHidden);
+        button.setAttribute('aria-expanded', String(!isHidden));
         if(arrow) arrow.classList.toggle('rotate-180');
       }
     });
@@ -133,7 +139,6 @@ const logoUrl = "/images/logo.svg";
   // 点击移动菜单中的任何链接后，关闭整个菜单
   mobileMenu?.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
-      // 检查菜单是否展开，如果展开则模拟点击关闭
       if (!mobileMenu.classList.contains('hidden')) {
         mobileMenuButton?.click();
       }

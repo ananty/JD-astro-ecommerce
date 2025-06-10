@@ -33,9 +33,9 @@ export interface Product {
 export const productsData: Product[] = [
   {
     slug: 'spotify-premium',
-    name: 'Spotify Premium Account', // SEO: 更有描述性的标题
+    name: 'Spotify Premium', // SEO: 更有描述性的标题
     category: 'Music Streaming Service', // SEO: 更具体的分类
-    shortDescription: 'Get your own personal Spotify Premium account. Enjoy ad-free music, offline downloads, and superior sound quality with full control.', // SEO: 包含核心价值点
+    shortDescription: 'personal account. ad-free, offline downloads, superior sound quality.', // SEO: 包含核心价值点
     
     // SEO: 下面的 HTML 内容使用了 h2, h3, strong, ul/ol/dl 等语义化标签，并自然融入了关键词
     longDescription: `
@@ -119,9 +119,9 @@ export const productsData: Product[] = [
   },
   {
     slug: 'netflix-premium-4k',
-    name: 'Netflix Premium 4K Plan', // SEO: 描述性标题
+    name: 'Netflix Premium 4K', // SEO: 描述性标题
     category: 'Video Streaming Service', // SEO: 具体分类
-    shortDescription: 'Get your own private, PIN-protected profile on a Netflix Premium account. Stream your favorite shows and movies in stunning 4K Ultra HD.', // SEO: 包含核心卖点
+    shortDescription: 'PIN-protected. 4K Ultra HD.', // SEO: 包含核心卖点
 
     longDescription: `
       <h2>Stream in Stunning 4K with a Netflix Premium Profile</h2>
@@ -193,9 +193,9 @@ export const productsData: Product[] = [
   // 为了简洁，我暂时省略了其他产品的详细描述，但保留了它们的结构
   {
     slug: 'youtube-premium-music',
-    name: 'YouTube Premium + Music (12 Months)', // SEO: 描述性标题
+    name: 'YouTube Premium', // SEO: 描述性标题
     category: 'Video & Music Streaming', // SEO: 具体分类
-    shortDescription: 'Enjoy a full year of ad-free YouTube and YouTube Music. Unlock background play, offline downloads, and access to Originals.', // SEO: 包含核心卖点
+    shortDescription: '1 year ad-free YouTube and YouTube Music. Unlock background play, offline downloads.', // SEO: 包含核心卖点
 
     longDescription: `
       <h2>The Ultimate YouTube Experience, Uninterrupted</h2>
@@ -267,9 +267,9 @@ export const productsData: Product[] = [
   },
   {
     slug: 'duolingo-super',
-    name: 'Duolingo Super Subscription', // SEO: 描述性标题
+    name: 'Duolingo Super', // SEO: 描述性标题
     category: 'Education & Language Learning', // SEO: 具体分类
-    shortDescription: 'Learn any language faster with a Duolingo Super plan. Unlock ad-free lessons, unlimited hearts, and personalized practice.', // SEO: 包含核心卖点
+    shortDescription: 'ad-free lessons, unlimited hearts, and personalized practice.', // SEO: 包含核心卖点
 
     // SEO: 使用语义化标签和关键词
     longDescription: `
@@ -339,9 +339,9 @@ export const productsData: Product[] = [
   },
   {
     slug: 'microsoft-365',
-    name: 'Microsoft 365 Family Subscription', // SEO: 描述性标题
+    name: 'Microsoft 365 Family', // SEO: 描述性标题
     category: 'Productivity Software', // SEO: 具体分类
-    shortDescription: 'Get premium Office apps like Word, Excel, and PowerPoint, plus 1TB of OneDrive cloud storage per person on your own account.', // SEO: 包含核心卖点
+    shortDescription: 'Get premium Office apps, 1TB OneDrive.', // SEO: 包含核心卖点
 
     longDescription: `
       <h2>Empower Your Productivity with Microsoft 365 Family</h2>
@@ -405,9 +405,9 @@ export const productsData: Product[] = [
     // 在 productsData 数组中，找到并替换这个对象
   {
     slug: 'hbo-max-4k',
-    name: 'HBO Max 4K Streaming Plan', // SEO: 描述性标题
+    name: 'HBO Max 4K', // SEO: 描述性标题
     category: 'Video Streaming Service', // SEO: 具体分类
-    shortDescription: 'Access all of HBO, blockbuster movies, and exclusive Max Originals in stunning 4K. Get your own private profile on a shared account.', // SEO: 包含核心卖点
+    shortDescription: '4K. Own private profile.', // SEO: 包含核心卖点
 
     longDescription: `
       <h2>Dive into Iconic Worlds with HBO Max in 4K</h2>

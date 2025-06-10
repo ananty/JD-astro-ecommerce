@@ -1,0 +1,46 @@
+---
+// src/pages/policy.astro (修正版)
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Warranty & Refund Policy";
+const pageDescription = "Learn about our full warranty coverage and pro-rata refund policy for all digital subscriptions at Jaideepas.";
+---
+<Layout title={pageTitle} description={pageDescription}>
+  {/* 页面所有内容都必须放在 Layout 组件里面 */}
+  <section class="py-16 md:py-24 bg-gray-50 dark:bg-gray-800/50 text-center">
+    <div class="container mx-auto px-4">
+      <h1 class="text-4xl font-extrabold">{pageTitle}</h1>
+    </div>
+  </section>
+
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <article class="prose dark:prose-invert lg:prose-lg max-w-4xl mx-auto">
+        <p class="lead">At Jaideepas, we are committed to providing reliable services and ensuring your satisfaction. All our products are covered by a full warranty for the entire duration of the purchased subscription period.</p>
+        
+        <h2>Our Warranty Promise</h2>
+        <p>We guarantee that the product you purchase will remain functional for the full term of your subscription. This warranty covers issues originating from our end, such as account access problems or subscription interruptions that are not caused by user-initiated changes (e.g., changing account credentials on shared plans where it is not permitted).</p>
+
+        <h2>Refund Process</h2>
+        <ol>
+          <li><strong>Contact Support:</strong> Immediately reach out to our customer support team via the methods listed on our <a href="/contact">Contact Us</a> page. Please provide your order details and a clear description of the problem.</li>
+          <li><strong>Troubleshooting:</strong> Our support team will work with you to diagnose and resolve the issue. We pride ourselves on our rapid response and effective troubleshooting.</li>
+          <li><strong>Resolution or Refund:</strong> In the rare event that the issue cannot be resolved by our team, we will provide you with a pro-rata refund for the remaining unused portion of your subscription.</li>
+        </ol>
+        
+        <h3>Example of a Pro-Rata Refund</h3>
+        <p>If you purchase a 6-month subscription and the product becomes unusable after 4 months, and we are unable to fix it, you will be refunded for the remaining 2 months.</p>
+
+        <h2>Policy Exclusions</h2>
+        <p>This warranty and refund policy does not cover issues caused by:</p>
+        <ul>
+          <li>Violation of the terms specific for a product (e.g., changing the password on a designated shared account).</li>
+          <li>Loss of access due to your own actions.</li>
+          <li>Service-wide outages from the official provider (e.g., a global Netflix outage).</li>
+        </ul>
+
+        <p class="mt-8">We believe in fair and transparent service. Our goal is to ensure you have a seamless and worry-free experience with every purchase.</p>
+      </article>
+    </div>
+  </section>
+</Layout>

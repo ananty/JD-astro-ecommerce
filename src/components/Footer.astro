@@ -1,84 +1,79 @@
 ---
-// src/components/Footer.astro
-import SocialLinks from './SocialLinks.astro'; // 我们稍后会创建这个组件
+// src/components/Footer.astro (重构版)
+import SocialLinks from './SocialLinks.astro';
 
-// 页脚导航链接 (与Navbar中的链接类似或子集)
-const footerLinks = [
+// 我们将所有链接分成两列，以填充空间
+const footerLinksCol1 = [
   { href: "/", label: "Home" },
-  { href: "/product/spotify-premium", label: "Products" },
-    { href: "/gallery", label: "Gallery" }, 
+  { href: "/products", label: "All Products" },
+  { href: "/gallery", label: "Gallery" },
+];
+
+const footerLinksCol2 = [
   { href: "/about", label: "About Us" },
   { href: "/contact", label: "Contact Us" },
-  // 你可以添加更多链接，例如:
-  // { href: "/privacy-policy", label: "Privacy Policy" },
-  // { href: "/terms-of-service", label: "Terms of Service" },
+  { href: "/policy", label: "Warranty & Refund Policy" }, // 新增的政策页面链接
 ];
+
 const siteTitle = "Jaideepas";
-const slogan = "Your go-to hub for all streaming services! Secure, Convenient, Affordable."; // 英文Slogan
+const slogan = "Your go-to hub for all streaming services! Secure, Convenient, Affordable.";
 const logoUrl = "/images/logo.svg";
 ---
 <footer class="bg-gray-100 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 print:hidden">
-  {/* 
-    bg-gray-100 dark:bg-gray-800: 页脚背景色
-    border-t: 顶部边框
-    print:hidden: 打印时隐藏页脚
-  */}
   <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-      {/* Logo 和 Slogan */}
-      <div class="md:col-span-2 lg:col-span-1">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+      
+      <!-- 左侧 Logo 和 Slogan (现在占据2个网格宽度，在大屏幕上更平衡) -->
+      <div class="sm:col-span-2 lg:col-span-2">
         <a href="/" class="flex items-center mb-4 group" aria-label="Go to homepage">
           <img class="h-8 w-auto group-hover:opacity-80 transition-opacity" src={logoUrl} alt={`${siteTitle} Logo`} />
           <span class="ml-3 text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
             {siteTitle}
           </span>
         </a>
-        <p class="text-sm text-gray-600 dark:text-gray-400">
+        <p class="text-sm text-gray-600 dark:text-gray-400 max-w-sm">
           {slogan}
         </p>
       </div>
 
-      {/* 网站地图 */}
-      <div>
-        <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-4">Site Map</h3>
-        <ul class="space-y-2">
-          {footerLinks.map(link => (
-            <li>
-              <a href={link.href} class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-500 dark:hover:text-primary-400 transition-colors">
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
+      <!-- 右侧两列 Sitemap -->
+      <div class="sm:col-span-2 lg:col-span-2 grid grid-cols-2 gap-8">
+        <div>
+          <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-4">Site Map</h3>
+          <ul class="space-y-2">
+            {footerLinksCol1.map(link => (
+              <li>
+                <a href={link.href} class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-500 dark:hover:text-primary-400 transition-colors">
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-4">Help & Info</h3>
+          <ul class="space-y-2">
+            {footerLinksCol2.map(link => (
+              <li>
+                <a href={link.href} class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-500 dark:hover:text-primary-400 transition-colors">
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
 
-      {/* 产品分类 (示例 - 如果需要可以扩展) */}
-      <div>
-        <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-4">Categories</h3>
-        <ul class="space-y-2">
-          <li><a href="/product/spotify-premium" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-500 dark:hover:text-primary-400">Music Streaming</a></li>
-          <li><a href="/product/netflix-premium-4k" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-500 dark:hover:text-primary-400">Video Streaming</a></li>
-          <li><a href="/product/duolingo-super" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-500 dark:hover:text-primary-400">Education</a></li>
-          {/* ...更多分类 */}
-        </ul>
-      </div>
-      
-      {/* 联系方式和社交链接 */}
-      <div>
-        <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-4">Connect</h3>
-        <SocialLinks />
-        <p class="mt-4 text-sm text-gray-600 dark:text-gray-400">
-          Questions or feedback? Reach out!
-        </p>
-      </div>
     </div>
 
-    {/* 版权信息 */}
-    <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700 text-center md:text-left">
-      <p class="text-sm text-gray-500 dark:text-gray-400">
+    <!-- Connect 和版权信息 -->
+    <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700 flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="flex items-center gap-4">
+        <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300">Connect with us:</h3>
+        <SocialLinks />
+      </div>
+      <p class="text-sm text-gray-500 dark:text-gray-400 text-center md:text-right">
         © {new Date().getFullYear()} {siteTitle}. All rights reserved.
-        {/* 可选: 添加一个指向你或你的公司的链接 */}
-        {/* Designed by <a href="#" class="hover:underline">YourName</a>. */}
       </p>
     </div>
   </div>

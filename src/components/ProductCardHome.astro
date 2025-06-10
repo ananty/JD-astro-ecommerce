@@ -1,69 +1,66 @@
 ---
-// src/components/ProductCardHome.astro
-import type { Product } from '../data/products'; // 导入产品类型定义
+// src/components/ProductCardHome.astro (最终修复版)
+import type { Product } from '../data/products';
 
 export interface Props {
   product: Product;
-  loading?: 'lazy' | 'eager'; // 控制图片加载方式
+  loading?: 'lazy' | 'eager';
 }
 
 const { product, loading = 'lazy' } = Astro.props;
-const firstSku = product.skus[0]; // 获取第一个SKU用于显示起价
+
+// 安全地获取第一个 SKU，即使 skus 数组为空也不会报错
+const firstSku = product.skus && product.skus.length > 0 ? product.skus[0] : null;
 ---
-<div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-all duration-300 ease-in-out hover:shadow-2xl transform hover:-translate-y-1 flex flex-col card-base-hover">
-  {/* 产品图片链接到产品详情页 */}
+<div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-all duration-300 ease-in-out hover:shadow-2xl transform hover:-translate-y-1 flex flex-col group card-base-hover">
+  
+  {/* 图片区域 */}
   <a href={`/product/${product.slug}`} aria-label={`View details for ${product.name}`} class="block aspect-[16/10] overflow-hidden">
+    {/* 确保使用 product.listImage */}
     {product.listImage ? (
       <img 
         class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" 
         src={product.listImage} 
-        alt={`Image of ${product.name}`} 
+        alt={`Image for ${product.name}`} 
         loading={loading}
-        width="400" height="250" {/* 提供宽高比有助于浏览器布局 */}
+        width="400" height="250"
       />
     ) : (
       <div class="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-        <span class="text-gray-500 dark:text-gray-400">No image</span>
+        <span class="text-gray-500 dark:text-gray-400">No Image</span>
       </div>
     )}
   </a>
 
+  {/* 内容区域 */}
   <div class="p-5 md:p-6 flex flex-col flex-grow">
-    {/* 产品名称 */}
     <h3 class="text-lg md:text-xl font-semibold text-gray-900 dark:text-white mb-2">
       <a href={`/product/${product.slug}`} class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
         {product.name}
       </a>
     </h3>
 
-    {/* 产品简短描述 */}
-    <p class="text-sm text-gray-600 dark:text-gray-400 mb-3 flex-grow min-h-[3.5rem]"> {/* 约等于3行文字的高度 */}
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 flex-grow min-h-[4rem]">
       {product.shortDescription}
     </p>
     
-    {/* 产品特性列表 (最多显示2-3条) */}
-    {product.features && product.features.length > 0 && (
-      <ul class="text-xs text-gray-500 dark:text-gray-400 space-y-1 mb-3 list-disc list-inside pl-1">
-        {product.features.slice(0, 2).map(feature => (
-          <li>{feature}</li>
-        ))}
-      </ul>
-    )}
-
-    {/* 价格显示 (显示 "From $X.XX") */}
-    {firstSku && (
-      <p class="text-md font-semibold text-gray-800 dark:text-gray-200 mb-4">
-        From <span class="text-primary-600 dark:text-primary-400">{firstSku.currencySymbol}{firstSku.price.toFixed(2)}</span>
-        {product.skus.length > 1 ? <span class="text-xs text-gray-500 dark:text-gray-400"> / {firstSku.duration.toLowerCase()}</span> : ''}
-      </p>
-    )}
+    {/* 价格显示区域 */}
+    <div class="mb-4">
+      {firstSku ? (
+        <p class="text-md font-semibold text-gray-800 dark:text-gray-200">
+          From <span class="text-primary-600 dark:text-primary-400">{firstSku.currencySymbol}{firstSku.price.toFixed(2)}</span>
+        </p>
+      ) : (
+        <p class="text-sm text-gray-500">Pricing not available</p>
+      )}
+    </div>
     
     {/* "Shop Now" 按钮 */}
     <a 
       href={`/product/${product.slug}`} 
-      class="mt-auto btn-base w-full text-center bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 text-white font-semibold py-2.5 px-4 rounded-lg shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition-all duration-200 ease-in-out"
+      class="mt-auto btn-base w-full text-center bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 text-white font-semibold py-2.5 px-4 rounded-lg shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50"
     >
-      Shop Now
+      View Details
       <i class="fas fa-arrow-right ml-2 text-xs"></i>
     </a>
   </div>
