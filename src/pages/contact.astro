@@ -1,96 +1,113 @@
 ---
-// src/pages/contact.astro
-import Layout from '../layouts/Layout.astro'; // 导入基础布局
-import SocialLinks from '../components/SocialLinks.astro'; // 导入社交链接组件
-
-const pageTitle = "Contact Us";
-const pageDescription = "Get in touch with Jaideepas. We're here to help with any questions or inquiries you may have. Connect with us via social media.";
+// src/pages/contact.astro (最终布局调整版)
+import Layout from '../layouts/Layout.astro';
+import SocialLinks from '../components/SocialLinks.astro';
 ---
-<Layout title={pageTitle} description={pageDescription}>
-  {/* Hero Section for Contact Page */}
-  <section class="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 py-16 md:py-24 text-center fade-in-section">
+<Layout title="Contact Us" description="Get in touch with the Jaideepas support team. We're here to help with any questions about our services.">
+  <section class="py-16 md:py-24">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-      <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white mb-4">
-        Get In Touch
-      </h1>
-      <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-        We're here to assist you! Find the best way to reach us below.
-      </p>
-    </div>
-  </section>
+      
+      <!-- 主要标题区域 -->
+      <div class="text-center mb-12 md:mb-16">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">Get In Touch</h1>
+        <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          We're here to help! For the quickest response, please connect with us on your favorite platform.
+        </p>
+      </div>
 
-  {/* Main Content Area */}
-  <section class="py-12 md:py-20 bg-white dark:bg-gray-900">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        {/* Left Side: Contact Information / Message */}
-        <div class="fade-in-section" style="animation-delay: 100ms;">
-          <h2 class="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white mb-6">
-            Connect With Us on Social Media
-          </h2>
-          <p class="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
-            For the quickest response, please reach out to us through our social media channels. We're active and ready to help with your questions, provide support, or listen to your feedback.
-          </p>
-          <div class="mb-8">
-            <SocialLinks /> {/* 使用我们之前创建的社交链接组件 */}
-          </div>
-          <p class="text-sm text-gray-500 dark:text-gray-400">
-            We typically respond within a few hours during business days.
-          </p>
-        </div>
-
-        {/* Right Side: Optional - Image or Contact Form Placeholder */}
-        <div class="fade-in-section" style="animation-delay: 200ms;">
-          {/* 你可以在这里放一张相关的图片，或者一个联系表单的占位符/实际表单 */}
-          {/* 例如，一张办公室图片或客服团队图片 */}
-          <img 
-            src="/images/placeholders/contact-us-hero.jpg"  alt="Friendly customer support" 
-            class="rounded-xl shadow-xl object-cover w-full h-auto max-h-[400px]" 
-            loading="lazy"
-          />
-          {/* 
-            如果以后要添加联系表单:
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Send Us a Message</h3>
-            <form action="#" method="POST" class="space-y-6">
-              <div>
-                <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Full Name</label>
-                <input type="text" name="name" id="name" autocomplete="name" class="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm dark:bg-gray-700 dark:text-white" />
-              </div>
-              // ...更多表单字段 (Email, Message)
-              <div>
-                <button type="submit" class="w-full btn-base bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 px-6 rounded-lg">
-                  Send Message
-                </button>
-              </div>
-            </form>
-          */}
+      <!-- ==================== 社交媒体部分 (优先展示) ==================== -->
+      <div class="max-w-lg mx-auto">
+        <div class="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-lg shadow-md">
+            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6 text-center">Connect with Us Instantly</h2>
+            <div class="flex justify-center">
+              <SocialLinks />
+            </div>
         </div>
       </div>
+      
+      <!-- ==================== 联系表单部分 (备选方案) ==================== -->
+      <div class="max-w-lg mx-auto mt-16 pt-12 border-t border-gray-200 dark:border-gray-700">
+        <div class="text-center">
+            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-2">Or, Send Us a Message</h2>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-8">
+              If you prefer email, fill out the form below. We typically respond within 24 hours.
+            </p>
+        </div>
+
+        <!-- 原生 HTML 联系表单 -->
+        <form id="contact-form" class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-xl">
+          <div class="space-y-4">
+            <div>
+              <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Your Name</label>
+              <input type="text" name="name" id="name" autocomplete="name" class="block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 shadow-sm focus:border-primary-500 focus:ring-primary-500">
+            </div>
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Your Email</label>
+              <input type="email" name="email" id="email" autocomplete="email" required class="block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 shadow-sm focus:border-primary-500 focus:ring-primary-500">
+            </div>
+            <div>
+              <label for="subject" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Subject</label>
+              <input type="text" name="subject" id="subject" class="block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 shadow-sm focus:border-primary-500 focus:ring-primary-500">
+            </div>
+            <div>
+              <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Your Message</label>
+              <textarea id="message" name="message" rows="4" required class="block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 shadow-sm focus:border-primary-500 focus:ring-primary-500"></textarea>
+            </div>
+          </div>
+
+          <div class="mt-6">
+            <button type="submit" id="form-submit-button" class="w-full btn-base bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-opacity">
+              Send Message
+            </button>
+          </div>
+          
+          <p id="form-status" class="mt-4 text-center text-sm font-medium h-5"></p>
+        </form>
+      </div>
+
     </div>
   </section>
 </Layout>
 
 <script>
-  // 与首页类似的淡入动画逻辑
-  document.addEventListener('DOMContentLoaded', () => {
-    const sections = document.querySelectorAll('.fade-in-section');
-    if (window.IntersectionObserver) {
-      const observer = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            // obs.unobserve(entry.target); 
-          }
-        });
-      }, { threshold: 0.05 });
+  // 客户端脚本，用于处理表单的异步提交
+  const form = document.getElementById('contact-form');
+  const statusMessage = document.getElementById('form-status');
+  const submitButton = document.getElementById('form-submit-button');
 
-      sections.forEach(section => {
-        observer.observe(section);
+  async function handleSubmit(event) {
+    event.preventDefault(); // 阻止表单的默认刷新行为
+    const data = new FormData(event.target);
+    
+    submitButton.disabled = true;
+    submitButton.textContent = 'Sending...';
+    statusMessage.textContent = '';
+    statusMessage.className = 'mt-4 text-center text-sm font-medium h-5';
+
+    try {
+      // 使用 fetch API 将表单数据发送到我们的后端端点
+      const response = await fetch('/api/send-contact-email', {
+        method: 'POST',
+        body: data,
       });
-    } else {
-      sections.forEach(section => {
-        section.classList.add('is-visible');
-      });
+
+      if (response.ok) {
+        statusMessage.textContent = "Thank you! Your message has been sent.";
+        statusMessage.classList.add('text-green-600');
+        form.reset();
+      } else {
+        // 处理服务器返回的错误
+        const responseData = await response.json();
+        statusMessage.textContent = responseData.error || "Oops! There was a problem.";
+        statusMessage.classList.add('text-red-600');
+      }
+    } catch (error) {
+      statusMessage.textContent = "Oops! An unexpected error occurred.";
+      statusMessage.classList.add('text-red-600');
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = 'Send Message';
     }
-  });
+  }
+  form.addEventListener("submit", handleSubmit)
 </script>
