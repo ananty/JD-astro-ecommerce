@@ -39,10 +39,10 @@ export const productsData: Product[] = [
     
     // SEO: 下面的 HTML 内容使用了 h2, h3, strong, ul/ol/dl 等语义化标签，并自然融入了关键词
     longDescription: `
-            <h2>Experience Music Like Never Before</h2>
-      <p>With Spotify Premium, you get unlimited access to a world of music. Listen to your favorite artists, discover new tracks, and create personalized playlists for any mood or moment. This is your own private account, giving you full control.</p>
+            <h2>Spotify Premium — Full Control, Uninterrupted Sound</h2>
+      <p>Unlock a premium listening experience with a Spotify Premium subscription. Get full access to ad-free music, offline playback, high-quality sound, and complete control over your account — all at a fraction of the regular price.</p>
       
-      <h3>Key Features of Spotify Premium:</h3>
+      <h3>🎵 Key Features of Spotify Premium:</h3>
       <ul>
         <li><strong>Ad-Free Listening:</strong> Enjoy uninterrupted music without any ad breaks.</li>
         <li><strong>Offline Playback:</strong> Download your favorite songs and playlists to listen anywhere, even without an internet connection.</li>
@@ -50,29 +50,30 @@ export const productsData: Product[] = [
         <li><strong>Full Account Control:</strong> This is a dedicated personal account. You can change the password and settings immediately after activation.</li>
       </ul>
 
-      <h2>Important Information: Before You Buy</h2>
+      <h2>🔧 How It Works</h2>
       <ol>
-        <li><strong>Official & Affordable Plan:</strong> To offer you the best value, your account will be added to an official family plan based in regions like India or Nigeria.</li>
-        <li><strong>Account Region Change Process:</strong> For the initial setup, we need to change your account's region. Therefore, we will require your account password. Once the subscription is activated, you are strongly encouraged to change your password immediately for your security.</li>
-        <li><strong>12-Month Eligibility Rule:</strong> As per Spotify's official policy, your account must not have been a member of any other family group within the last 12 months.</li>
+        <li><strong>Place Your Order:</strong> Checkout securely through our Stripe page.</li>
+        <li><strong>Submit Your Spotify Credentials:</strong> During payment, Submit your Spotify login email and password (required only once for activation).</li>
+        <li><strong>We Activate Premium:</strong> We handle everything securely and promptly. Your account will be activated.</li>
+        <li><strong>Change Your Password:</strong> After setup, we strongly recommend changing your password to ensure your privacy and security.</li>
       </ol>
 
-      <h2>Frequently Asked Questions (FAQ)</h2>
+      <h2>FAQ</h2>
       <div class="faq-accordion">
         <details>
           <summary>What if I don't have a Spotify account?</summary>
           <div class="faq-content">
-            <p>No problem at all! We will create a brand new, official Spotify account for you at no extra cost. Simply choose this option on the secure checkout page and provide an email for registration.</p>
+            <p>No problem — you can create a free account before purchase, or we can assist you.</p>
           </div>
         </details>
         <details>
           <summary>How do I provide my password if I log in with Facebook, Google, or Apple?</summary>
           <div class="faq-content">
-            <p>That's easy. Please visit Spotify's official <a href="https://www.spotify.com/account/set-device-password/" target="_blank" rel="noopener noreferrer">"Set a device password"</a> page. This allows you to create a unique password for Spotify itself, which you can then securely provide on our checkout page along with your Spotify username.</p>
+            <p>Just go to Spotify's official <a href="https://www.spotify.com/account/set-device-password/" target="_blank" rel="noopener noreferrer">"Set a device password"</a> page. create a standard password before sending it to us.</p>
           </div>
         </details>
         <details>
-          <summary>What's the difference between Spotify India region and others?</summary>
+          <summary>What's the difference between Spotify different region and others?</summary>
           <div class="faq-content">
             <p>The music library is virtually identical. The main differences are in regional charts and some exclusive content, but this is minimal. Your personalized recommendations are based entirely on your personal listening history, not the account's region.</p>
           </div>
@@ -84,9 +85,9 @@ export const productsData: Product[] = [
           </div>
         </details>
         <details>
-          <summary>Can I purchase if my trial or subscription hasn't expired yet?</summary>
+          <summary>Will I lose my playlists, followers, or liked songs?</summary>
           <div class="faq-content">
-            <p>No, an active trial or subscription prevents the required region change. Please either wait for your current subscription to expire or provide a different account. If you've already purchased, we can also register a new account for you.</p>
+            <p>Not at all. Your account remains the same — only the subscription status is upgraded.</p>
           </div>
         </details>
       </div>
