@@ -1,0 +1,350 @@
+.
+|____tailwind.config.js
+|____.DS_Store
+|____CHANGELOG.MD
+|____emails
+|____astro.config.mjs
+|____README.md
+|____public
+| |____.DS_Store
+| |____header-blue-purple.jpg
+| |____images
+| | |____.DS_Store
+| | |____products
+| | | |____.DS_Store
+| | | |____gallery
+| | | | |____hbo-1.png
+| | | | |____netflix-1.png
+| | | | |____netflix-2.png
+| | | | |____.DS_Store
+| | | | |____spotify-3.png
+| | | | |____spotify-2.png
+| | | | |____duolingo-1.png
+| | | | |____duolingo-3.png
+| | | | |____duolingo-2.png
+| | | | |____spotify-1.png
+| | | | |____m365-1.jpg
+| | | | |____youtube-1.png
+| | | |____cards
+| | | | |____m365-card.jpg
+| | | | |____duolingo-card.png
+| | | | |____spotify-card.png
+| | | | |____netflix-card.png
+| | | | |____hbo-card.png
+| | | | |____youtube-card.png
+| | | |____spotify-1.png
+| | |____gallery-placeholders
+| | | |____post-1.png
+| | |____mirror.png
+| | |____spotify-1.png
+| | |____avatars
+| | | |____avatar-1.png
+| | | |____avatar-2.png
+| | | |____.DS_Store
+| | | |____3d-illustration-person-with-sunglasses-green-hair.png
+| | |____logo.svg
+| |____data.json
+| |____logo
+| | |____logo-spotify.svg
+| |____spotify-1.png
+| |____robots.txt
+| |____favicon.svg
+|____.gitignore
+|____package-lock.json
+|____package.json
+|____.env
+|____hooks
+| |____tools
+| | |____copyToClipboard.tsx
+| | |____useEffectOnlyOnUpdate.tsx
+| |____interaction
+| | |____useApiQuery.tsx
+|____.github
+| |____workflows
+| | |____deploy.yml
+|____tsconfig.json
+|____project-structure.txt
+|____assets
+| |____js
+| | |____astro-ecommerce.js
+| |____scss
+| | |____astro-ecommerce
+| | | |_____navbar.scss
+| | | |_____variables.scss
+| | | |_____progress.scss
+| | | |_____typography.scss
+| | | |____forms
+| | | | |_____input-group.scss
+| | | | |_____form-check.scss
+| | | | |_____inputs.scss
+| | | | |_____form-switch.scss
+| | | | |_____forms.scss
+| | | | |_____form-select.scss
+| | | | |_____labels.scss
+| | | |____bootstrap
+| | | | |_____functions.scss
+| | | | |_____containers.scss
+| | | | |_____toasts.scss
+| | | | |_____navbar.scss
+| | | | |_____variables.scss
+| | | | |_____progress.scss
+| | | | |_____offcanvas.scss
+| | | | |_____popover.scss
+| | | | |____forms
+| | | | | |_____floating-labels.scss
+| | | | | |_____input-group.scss
+| | | | | |_____form-check.scss
+| | | | | |_____form-text.scss
+| | | | | |_____form-range.scss
+| | | | | |_____form-select.scss
+| | | | | |_____form-control.scss
+| | | | | |_____validation.scss
+| | | | | |_____labels.scss
+| | | | |_____breadcrumb.scss
+| | | | |_____carousel.scss
+| | | | |____bootstrap.scss
+| | | | |_____badge.scss
+| | | | |____mixins
+| | | | | |_____reset-text.scss
+| | | | | |_____table-variants.scss
+| | | | | |_____image.scss
+| | | | | |_____deprecate.scss
+| | | | | |_____lists.scss
+| | | | | |_____gradients.scss
+| | | | | |_____text-truncate.scss
+| | | | | |_____visually-hidden.scss
+| | | | | |_____container.scss
+| | | | | |_____utilities.scss
+| | | | | |_____breakpoints.scss
+| | | | | |_____box-shadow.scss
+| | | | | |_____forms.scss
+| | | | | |_____color-mode.scss
+| | | | | |_____buttons.scss
+| | | | | |_____transition.scss
+| | | | | |_____caret.scss
+| | | | | |_____resize.scss
+| | | | | |_____color-scheme.scss
+| | | | | |_____list-group.scss
+| | | | | |_____pagination.scss
+| | | | | |_____clearfix.scss
+| | | | | |_____grid.scss
+| | | | | |_____banner.scss
+| | | | | |_____alert.scss
+| | | | | |_____backdrop.scss
+| | | | | |_____border-radius.scss
+| | | | |_____helpers.scss
+| | | | |_____placeholders.scss
+| | | | |____tests
+| | | | | |____mixins
+| | | | | | |_____color-modes.test.scss
+| | | | | | |_____utilities.test.scss
+| | | | | | |_____media-query-color-mode-full.test.scss
+| | | | | |____utilities
+| | | | | | |_____api.test.scss
+| | | | | |____sass-true
+| | | | | | |____runner.js
+| | | | | | |____register.js
+| | | | | |____jasmine.js
+| | | | |_____accordion.scss
+| | | | |_____button-group.scss
+| | | | |_____reboot.scss
+| | | | |_____utilities.scss
+| | | | |_____forms.scss
+| | | | |_____buttons.scss
+| | | | |_____tables.scss
+| | | | |____utilities
+| | | | | |_____api.scss
+| | | | |_____images.scss
+| | | | |_____close.scss
+| | | | |_____list-group.scss
+| | | | |____bootstrap-grid.scss
+| | | | |_____pagination.scss
+| | | | |_____card.scss
+| | | | |_____grid.scss
+| | | | |_____mixins.scss
+| | | | |_____nav.scss
+| | | | |_____alert.scss
+| | | | |_____transitions.scss
+| | | | |_____tooltip.scss
+| | | | |_____root.scss
+| | | | |_____variables-dark.scss
+| | | | |____bootstrap-utilities.scss
+| | | | |_____modal.scss
+| | | | |_____spinners.scss
+| | | | |____helpers
+| | | | | |_____ratio.scss
+| | | | | |_____focus-ring.scss
+| | | | | |_____vr.scss
+| | | | | |_____visually-hidden.scss
+| | | | | |_____color-bg.scss
+| | | | | |_____clearfix.scss
+| | | | | |_____icon-link.scss
+| | | | | |_____text-truncation.scss
+| | | | | |_____stacks.scss
+| | | | | |_____position.scss
+| | | | | |_____stretched-link.scss
+| | | | | |_____colored-links.scss
+| | | | |_____type.scss
+| | | | |_____dropdown.scss
+| | | | |_____maps.scss
+| | | | |____vendor
+| | | | | |_____rfs.scss
+| | | | |____bootstrap-reboot.scss
+| | | |_____avatars.scss
+| | | |_____navbar-vertical.scss
+| | | |_____badge.scss
+| | | |____mixins
+| | | | |_____hover.scss
+| | | | |_____badge.scss
+| | | | |_____social-buttons.scss
+| | | | |____mixins.scss
+| | | | |_____colored-shadows.scss
+| | | |_____timeline.scss
+| | | |____plugins
+| | | | |____free
+| | | | | |_____perfect-scrollbar.scss
+| | | | | |_____flatpickr.scss
+| | | | | |____plugins.scss
+| | | | | |_____swiper.scss
+| | | | | |_____nouislider.scss
+| | | | | |_____prism.scss
+| | | |_____gradients.scss
+| | | |____cards
+| | | | |____card-background.scss
+| | | | |____card-product.scss
+| | | |_____info-areas.scss
+| | | |_____button-group.scss
+| | | |_____tilt.scss
+| | | |_____utilities.scss
+| | | |_____social-buttons.scss
+| | | |_____utilities-extend.scss
+| | | |_____forms.scss
+| | | |_____misc.scss
+| | | |_____buttons.scss
+| | | |_____tooltips.scss
+| | | |_____tables.scss
+| | | |_____breadcrumbs.scss
+| | | |_____fixed-plugin.scss
+| | | |_____pagination.scss
+| | | |____variables
+| | | | |_____navbar.scss
+| | | | |_____breadcrumb.scss
+| | | | |_____avatars.scss
+| | | | |_____navbar-vertical.scss
+| | | | |_____badge.scss
+| | | | |_____timeline.scss
+| | | | |_____full-calendar.scss
+| | | | |_____animations.scss
+| | | | |_____virtual-reality.scss
+| | | | |_____info-areas.scss
+| | | | |_____misc-extend.scss
+| | | | |_____choices.scss
+| | | | |_____form-switch.scss
+| | | | |_____utilities.scss
+| | | | |_____table.scss
+| | | | |_____social-buttons.scss
+| | | | |_____utilities-extend.scss
+| | | | |_____misc.scss
+| | | | |_____cards-extend.scss
+| | | | |_____fixed-plugin.scss
+| | | | |_____pagination.scss
+| | | | |_____cards.scss
+| | | | |_____dropdowns.scss
+| | | | |_____dark-version.scss
+| | | | |_____rtl.scss
+| | | | |_____header.scss
+| | | |_____cards.scss
+| | | |_____popovers.scss
+| | | |_____nav.scss
+| | | |_____alert.scss
+| | | |_____footer.scss
+| | | |_____dark-version.scss
+| | | |_____rtl.scss
+| | | |____custom
+| | | | |_____variables.scss
+| | | | |_____styles.scss
+| | | |_____header.scss
+| | | |____theme.scss
+| | | |_____dropup.scss
+| | | |_____dropdown.scss
+| | |____loading-dot.css
+| | |____astro-ecommerce.scss
+|____src
+| |____env.d.ts
+| |____content
+| | |____gallery
+| | | |____my-first-gallery-post.md
+| | |____config.ts
+| |____components
+| | |____complexFooter.tsx
+| | |____products
+| | | |____productFeatureImg.tsx
+| | | |____categoryFilters.tsx
+| | | |____productOverviewGrid.tsx
+| | | |____productFeatureTabs.tsx
+| | | |____cardProduct.tsx
+| | | |____productSizes.tsx
+| | | |____productFeatureDetails.tsx
+| | | |____productBadge.tsx
+| | | |____productImages.tsx
+| | | |____productQuickview2.tsx
+| | | |____productOverviewGallery.tsx
+| | | |____productRating.tsx
+| | | |____cardCategory.tsx
+| | | |____productQuickview.tsx
+| | | |____productFeature.tsx
+| | | |____productFeature2.tsx
+| | | |____productAccordion.tsx
+| | | |____productGallery.tsx
+| | |____incentives
+| | | |____incentiveLarge.tsx
+| | | |____incentiveCols.tsx
+| | |____StaticReviewsDisplay.astro
+| | |____Footer.astro
+| | |____TestCard.astro
+| | |____complexNavbarDark.tsx
+| | |____ProductCardHome.astro
+| | |____complexNavbar.tsx
+| | |____SocialLinks.astro
+| | |____ThemeToggle.astro
+| | |____dashboardContext.tsx
+| | |____Navbar.astro
+| | |____FeatureHighlight.astro
+| | |____promo
+| | | |____promoSectionLarge.tsx
+| | | |____testimonialsFade.tsx
+| | |____store
+| | | |____upperNavbar.tsx
+| | | |____storeNavbar.tsx
+| | | |____storeDoubleColumn.tsx
+| | | |____storeNavigation.tsx
+| | |____reviews
+| | | |____reviewSimple.tsx
+| | | |____reviewRating.tsx
+| | | |____reviewProgress.tsx
+| | | |____reviewComment.tsx
+| | | |____reviewSummaryChart.tsx
+| |____layouts
+| | |____Layout.astro
+| |____i18n
+| |____data
+| | |____products.ts
+| | |____reviewsData.ts
+| |____pages
+| | |____success.astro
+| | |____404.astro
+| | |____about.astro
+| | |____policy.astro
+| | |____index.astro
+| | |____gallery
+| | | |____index.astro
+| | | |____[slug].astro
+| | |____product
+| | | |____[slug].astro
+| | |____contact.astro
+| | |____shopping-cart.astro
+| | |____landing.astro
+| | |____api
+| | | |____create-checkout-session.ts
+| | | |____send-contact-email.ts
+| | |____products.astro
