@@ -54,9 +54,9 @@ export const POST: APIRoute = async ({ request }) => {
       mode: 'payment',
       success_url: successUrl,
       cancel_url: cancelUrl,
-      phone_number_collection: {
-        enabled: true, // 始终收集手机号
-      },
+      // phone_number_collection: {
+      //   enabled: true, // 始终收集手机号
+      // },
       metadata: {
         product_slug: productSlug,
       },

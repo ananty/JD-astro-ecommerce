@@ -104,9 +104,9 @@ export const productsData: Product[] = [
     
     // 更新了价格，并假设了新的 Stripe Price ID
     skus: [
-      { id: 'sp-3m', duration: '3 Months', price: 9.00, currency: 'USD', currencySymbol: '$', stripePriceId: 'price_1RXeH3JuY2t8VoKmu3CpyhB0' },
-      { id: 'sp-6m', duration: '6 Months', price: 15.00, currency: 'USD', currencySymbol: '$', stripePriceId: 'price_1RXeISJuY2t8VoKmb9brWuSA' },
-      { id: 'sp-12m', duration: '12 Months', price: 25.00, currency: 'USD', currencySymbol: '$', stripePriceId: 'price_1RXeJFJuY2t8VoKmaRG6lVJj' },
+      { id: 'sp-3m', duration: '3 Months', price: 9.00, currency: 'USD', currencySymbol: '$', stripePriceId: 'price_1RZUUEJuY2t8VoKmRr7bfrGh' },
+      { id: 'sp-6m', duration: '6 Months', price: 15.00, currency: 'USD', currencySymbol: '$', stripePriceId: 'price_1RZUUEJuY2t8VoKm9vegic1s' },
+      { id: 'sp-12m', duration: '12 Months', price: 25.00, currency: 'USD', currencySymbol: '$', stripePriceId: 'price_1RZUUEJuY2t8VoKmjwmjlI89' },
     ],
     
     listImage: '/images/products/cards/spotify-card.png',
@@ -125,21 +125,27 @@ export const productsData: Product[] = [
     shortDescription: 'PIN-protected. 4K Ultra HD.', // SEO: 包含核心卖点
 
     longDescription: `
-      <h2>Stream in Stunning 4K with a Netflix Premium Profile</h2>
-      <p>Upgrade your movie nights with our <strong>Netflix Premium 4K</strong> plan. This service gives you access to the highest video quality available on Netflix through your own private, PIN-protected profile on a shared premium account. Enjoy breathtaking 4K Ultra HD and HDR content on a wide range of devices.</p>
+      <h2>Experience Netflix in Stunning 4K Ultra HD</h2>
+      <p>Upgrade your entertainment with our Netflix Premium 4K plan — a cost-effective way to enjoy ultra high-definition streaming on your own secure, private profile within a shared account.
 
-      <h3>Key Features of Our Netflix Plan:</h3>
+Whether you're binge-watching a new series or hosting movie night, this plan ensures the highest quality experience across all your devices.</p>
+
+      <h3>🔑 Why Choose Our Netflix Premium Plan</h3>
       <ul>
-        <li><strong>Ultra HD 4K Quality:</strong> Watch content in the best possible resolution, bringing cinematic quality right to your home.</li>
-        <li><strong>Complete Privacy with Profile PIN:</strong> You will get your own dedicated profile. We strongly recommend setting a <strong>Profile Lock PIN</strong> to ensure only you can access your watch history and recommendations.</li>
-        <li><strong>Multi-Device Access:</strong> Log in on any of your compatible devices (TV, laptop, tablet, phone). You can bind up to two devices and stream on one device at a time.</li>
-        <li><strong>Global Availability:</strong> Our accounts support users from all around the world.</li>
+        <li><strong>🎥 Ultra HD 4K + HDR Streaming:</strong> Watch your favorite shows and movies in cinema-grade 4K resolution with HDR support — perfect for modern TVs and monitors.</li>
+        <li><strong>🔐 Private Profile with PIN Protection:</strong> You’ll receive a dedicated profile (e.g., “Profile 2”) and are encouraged to set a PIN lock to secure your watch history, preferences, and recommendations.</li>
+        <li><strong>📱 Multi-Device Compatibility:</strong> Stream across up to 2 of your personal devices, including smartphones, tablets, laptops, and smart TVs. Enjoy simultaneous streaming on 1 device at a time.</li>
+        <li><strong>🌍 Global Access:</strong> Our accounts support users worldwide — no matter where you’re located.</li>
       </ul>
 
       <h2>How It Works</h2>
-      <p>The process is simple and fast. After you complete the payment, we will deliver the shared account login credentials and your dedicated profile details (e.g., "Profile 2") directly to the email address you provide during checkout.</p>
+      <ol>
+        <li><strong>Place Your Order:</strong> Complete payment via our secure checkout.</li>
+        <li><strong>Get Instant Delivery:</strong> We’ll send the shared login credentials and your assigned profile name to your email.</li>
+        <li><strong>Set Your Profile PIN:</strong> Lock your profile for full privacy and start streaming instantly.</li>
+      </ol>
 
-      <h2>Frequently Asked Questions (FAQ) for Netflix Sharing</h2>
+      <h2>FAQ</h2>
       <div class="faq-accordion">
         <details>
           <summary>How do I set a PIN to protect my profile?</summary>
@@ -150,7 +156,7 @@ export const productsData: Product[] = [
         <details>
           <summary>Why is the video quality not 4K?</summary>
           <div class="faq-content">
-            <p>Netflix automatically adjusts video quality based on your device, internet connection, and the content itself. To get 4K, ensure you are using a 4K-compatible device, have a stable internet connection of at least 15-25 Mbps, and are watching a title available in 4K. For more details, please refer to the <a href="https://help.netflix.com/en/node/13444" target="_blank" rel="noopener noreferrer">official Netflix 4K documentation</a>.</p>
+            <p>Make sure your device and internet connection support 4K playback. For more details, please refer to the <a href="https://help.netflix.com/en/node/13444" target="_blank" rel="noopener noreferrer">official Netflix 4K documentation</a>.</p>
           </div>
         </details>
         <details>
@@ -178,8 +184,8 @@ export const productsData: Product[] = [
     
     // 价格已更新
     skus: [
-      { id: 'nf-1m', duration: '1 Month', price: 6.00, currency: 'USD', currencySymbol: '$', stripePriceId: 'REPLACE_WITH_NETFLIX_1M_PRICE_ID' },
-      { id: 'nf-3m', duration: '3 Months', price: 13.00, currency: 'USD', currencySymbol: '$', stripePriceId: 'REPLACE_WITH_NETFLIX_3M_PRICE_ID' },
+      { id: 'nf-1m', duration: '1 Month', price: 6.00, currency: 'USD', currencySymbol: '$', stripePriceId: 'price_1RZUUCJuY2t8VoKmwtRatXpC' },
+      { id: 'nf-3m', duration: '3 Months', price: 13.00, currency: 'USD', currencySymbol: '$', stripePriceId: 'price_1RZUUCJuY2t8VoKmh417BlOY' },
     ],
     
     listImage: '/images/products/cards/netflix-card.png',
@@ -190,8 +196,7 @@ export const productsData: Product[] = [
       { src: '/images/products/gallery/netflix-3.png', alt: 'The Netflix user interface on a tablet, showcasing a wide variety of content' },
     ],
   },
-  // 你可以按照这个格式为其他产品 (YouTube, HBO, Duolingo, M365) 添加 longDescription 和 galleryImages
-  // 为了简洁，我暂时省略了其他产品的详细描述，但保留了它们的结构
+  
   {
     slug: 'youtube-premium-music',
     name: 'YouTube Premium', // SEO: 描述性标题
@@ -199,47 +204,43 @@ export const productsData: Product[] = [
     shortDescription: '1 year ad-free YouTube and YouTube Music. Unlock background play, offline downloads.', // SEO: 包含核心卖点
 
     longDescription: `
-      <h2>The Ultimate YouTube Experience, Uninterrupted</h2>
+      <h2>Enjoy YouTube Premium + Music — Ad-Free, Anywhere</h2>
       <p>Upgrade your viewing and listening with a 12-month <strong>YouTube Premium + Music</strong> subscription. This all-in-one plan removes ads across all of YouTube, unlocks exclusive features, and gives you full access to the YouTube Music Premium streaming service.</p>
 
-      <h3>Key Features of YouTube Premium:</h3>
+      <h3>🔥 Key Features of YouTube Premium:</h3>
       <ul>
-        <li><strong>Completely Ad-Free:</strong> Watch millions of videos without any interruptions from ads before, during, or as overlays.</li>
-        <li><strong>Background Play:</strong> Keep videos playing on your mobile device even when you open another app or lock your screen. Perfect for listening to lectures, podcasts, and music.</li>
-        <li><strong>Offline Downloads:</strong> Download videos and playlists to your mobile device to watch later, perfect for travel or areas with poor connectivity.</li>
-        <li><strong>YouTube Originals:</strong> Get access to all exclusive YouTube Originals series and movies.</li>
-        <li><strong>YouTube Music Premium Included:</strong> Your subscription automatically includes full access to the YouTube Music app, featuring a massive library, ad-free listening, offline mode, and a convenient audio-only playback option.</li>
+        <li><strong>🚫 Ad-Free:</strong> Watch millions of videos without any interruptions from ads before, during, or as overlays.</li>
+        <li><strong>📱 Background Play:</strong> Keep videos playing on your mobile device even when you open another app or lock your screen. Perfect for listening to lectures, podcasts, and music.</li>
+        <li><strong>⬇️ Offline Downloads:</strong> Save videos and playlists to your device for smooth viewing anytime, anywhere.</li>
+        <li><strong>🎬 YouTube Originals:</strong> Get access to all exclusive YouTube Originals series and movies.</li>
+        <li><strong>🎵 YouTube Music Premium Included:</strong> Unlimited access to YouTube Music: ad-free, offline, and with audio-only background playback.</li>
       </ul>
 
-      <h2>Important: Before You Buy (3 Simple Checks)</h2>
-      <p>To ensure we can add you to our family plan, please complete these quick checks:</p>
+      <h2>✅ How It Works</h2>
       <ol>
-        <li><strong>Confirm Your Google Play Region:</strong> Visit <a href="https://play.google.com/wishlist" target="_blank" rel="noopener noreferrer">play.google.com</a>. The country displayed at the bottom-right of the page must be <strong>Hong Kong 🇭🇰, USA 🇺🇸, or Canada 🇨🇦</strong>. If it shows a different region, please contact our <a href="https://wa.me/message/M3GYT4MYO2H2M1" target="_blank" rel="noopener noreferrer">WhatsApp support</a> before purchasing.</li>
-        <li><strong>Check Your Payment Profiles:</strong> Visit <a href="https://payments.google.com/gp/w/u/0/home/settings" target="_blank" rel="noopener noreferrer">payments.google.com</a>. If you have multiple payment profiles, you must close the extra ones, leaving only a single active profile.</li>
-        <li><strong>No Active Subscription:</strong> Your Google account must not have an active YouTube Premium or Google One subscription.</li>
+        <li><strong>Provide Your Google Email:</strong> On our Stripe checkout page, simply enter the Google email address you want to link.</li>
+        <li><strong>We Send an Invite:</strong> Within 24 hours, you’ll receive an official YouTube Premium Family invitation email from Google.</li>
+        <li><strong>No Active Subscription:</strong> Click the link in the email from Google to join — no password or sensitive info needed.</li>
       </ol>
 
-      <h2>How to Get Your Subscription</h2>
-      <p>Please provide your <strong>Google account email address</strong> on the secure Stripe checkout page. After your payment is complete, we will send an official family group invitation from Google to that email. The process is typically completed within 24 hours.</p>
-
-      <h2>Frequently Asked Questions (FAQ) for YouTube Premium</h2>
+      <h2>FAQ</h2>
       <div class="faq-accordion">
         <details>
-          <summary>Are there any differences between regions?</summary>
+          <summary>What information do I need to provide?</summary>
           <div class="faq-content">
-            <p>No, the YouTube Premium benefits are global. Once you join the family plan, you can enjoy all features anywhere in the world where YouTube is accessible.</p>
+            <p>Just your Google account email address — we’ll handle the rest.</p>
           </div>
         </details>
         <details>
-          <summary>What if my Google Play region is not HK/US/CA?</summary>
+          <summary>Do I need to change my country or payment settings?</summary>
           <div class="faq-content">
-            <p>You can still purchase, but please contact our <a href="https://wa.me/message/M3GYT4MYO2H2M1" target="_blank" rel="noopener noreferrer">support team</a> immediately after receiving your invitation email. Our team will provide assistance to help you accept the family group invitation.</p>
+            <p>In most cases, no changes are needed. If your account has region restrictions, we’ll contact you after your order to assist — no worries.</p>
           </div>
         </details>
         <details>
-          <summary>I'm overseas, but not in HK/US/CA. Can I buy?</summary>
+          <summary> Is this has region restriction?</summary>
           <div class="faq-content">
-            <p>Yes. The key is your Google account's payment profile settings, not your physical location. Please follow the "Before You Buy" steps. If you need help joining after receiving the invitation, our support team is ready to assist.</p>
+            <p>Many users worldwide can join without any issue. We'll contact you if manual setup is required.</p>
           </div>
         </details>
       </div>
@@ -255,7 +256,7 @@ export const productsData: Product[] = [
     
     // 价格已更新
     skus: [
-      { id: 'yt-12m', duration: '12 Months', price: 29.00, currency: 'USD', currencySymbol: '$', stripePriceId: 'REPLACE_WITH_YOUTUBE_12M_PRICE_ID' },
+      { id: 'yt-12m', duration: '12 Months', price: 29.00, currency: 'USD', currencySymbol: '$', stripePriceId: 'price_1RZUU9JuY2t8VoKmZ7Chfajq' },
     ],
     
     listImage: '/images/products/cards/youtube-card.png',
@@ -274,44 +275,48 @@ export const productsData: Product[] = [
 
     // SEO: 使用语义化标签和关键词
     longDescription: `
-      <h2>Upgrade to Duolingo Super and Accelerate Your Learning</h2>
+      <h2>Upgrade to Duolingo Super and boost Your Learning</h2>
       <p>Supercharge your language learning journey with a <strong>Duolingo Super subscription</strong>. This premium upgrade removes all barriers, allowing you to learn faster, more effectively, and without any interruptions. We handle the upgrade on your existing account, so you keep all your progress.</p>
 
-      <h3>Key Features of Duolingo Super:</h3>
+      <h3>🚀 Key Features of Duolingo Super:</h3>
       <ul>
-        <li><strong>🥇 #1 Language Learning App:</strong> Upgrade your experience on the world's most popular language learning platform.</li>
-        <li><strong>Ad-Free Experience:</strong> Focus completely on your lessons with zero ads to slow you down.</li>
-        <li><strong>Unlimited Hearts:</strong> Mistakes are part of learning. With unlimited hearts, you can practice without being forced to stop or wait.</li>
-        <li><strong>Personalized Practice Hub:</strong> Get access to a dedicated hub that helps you review your mistakes and hone your skills for faster mastery.</li>
+        <li><strong>🥇 #1 Language Learning App:</strong> Join millions of learners worldwide using Duolingo to master new languages.</li>
+        <li><strong>✨ Ad-Free Experience:</strong> Stay focused on your goals without distractions or interruptions.</li>
+        <li><strong>❤️ Unlimited Hearts:</strong> Make as many mistakes as you need — learn without limits, no waiting required.</li>
+        <li><strong>Personalized Practice Hub:</strong> Get targeted review exercises to strengthen your weak areas and improve faster.</li>
       </ul>
 
-      <h2>How to Get Your Upgrade</h2>
-      <p>The process is simple and secure. All we need is your <strong>Duolingo Username or the email address</strong> you used to register. Please provide this information on the secure Stripe checkout page. Your account will be upgraded promptly after we receive your order.</p>
+      <h2>📦 How It Works</h2>
+       <ol>
+        <li><strong>Place Your Order:</strong> Use our secure checkout to purchase the upgrade.</li>
+        <li><strong>We Send an Invite:</strong> Simply provide your Duolingo username or registered email address during checkout.</li>
+        <li><strong>No Active Subscription:</strong> We will upgrade your account within 24 hours — no password required, no progress lost.</li>
+      </ol>
 
-      <h2>Frequently Asked Questions (FAQ) for Duolingo Super</h2>
+      <h2>FAQ</h2>
       <div class="faq-accordion">
         <details>
-          <summary>Will I keep my learning progress and streak?</summary>
+          <summary>Will I lose my progress or learning streak?</summary>
           <div class="faq-content">
-            <p>Yes, absolutely! We upgrade your <strong>existing Duolingo account</strong>, so your entire learning history, current streak, leaderboard rankings, and all achievements will remain exactly as they are.</p>
+            <p>No. Your existing account is upgraded directly — your progress, achievements, and streak remain untouched.</p>
           </div>
         </details>
         <details>
-          <summary>Can I purchase if my Duolingo trial or subscription is still active?</summary>
+          <summary>Can I buy if I’m currently on a Duolingo trial or subscription?</summary>
           <div class="faq-content">
-            <p>To ensure a smooth upgrade, your account must not have an active subscription. Please wait for your current trial or plan to expire before purchasing. This is a requirement from Duolingo's system.</p>
+            <p>To ensure a smooth upgrade, your account must not have an active subscription. Please wait for your current trial or plan to expire before purchasing.</p>
           </div>
         </details>
         <details>
           <summary>How can I check my subscription status?</summary>
           <div class="faq-content">
-            <p>You can check your status directly in the Duolingo app. Navigate to the Profile tab (face icon), tap the Settings gear icon (top right), and look for the "Subscription" section.</p>
+            <p>Go to Settings → Super Duolingo. You’ll see your subscription status and renewal info there.</p>
           </div>
         </details>
         <details>
           <summary>What devices are supported?</summary>
           <div class="faq-content">
-            <p>All of them. Your Duolingo Super subscription works seamlessly across all platforms where Duolingo is available: iOS (iPhone/iPad), Android, PC, Mac, and the web version.</p>
+            <p>All of them.</p>
           </div>
         </details>
       </div>
@@ -327,7 +332,7 @@ export const productsData: Product[] = [
     
     // 价格已更新
     skus: [
-      { id: 'duo-12m', duration: '12 Months', price: 7.00, currency: 'USD', currencySymbol: '$', stripePriceId: 'REPLACE_WITH_DUOLINGO_12M_PRICE_ID' },
+      { id: 'duo-12m', duration: '12 Months', price: 7.00, currency: 'USD', currencySymbol: '$', stripePriceId: 'price_1RZUU4JuY2t8VoKm1oPw7SGq' },
     ],
     
     listImage: '/images/products/cards/duolingo-card.png',
@@ -345,24 +350,28 @@ export const productsData: Product[] = [
     shortDescription: 'Get premium Office apps, 1TB OneDrive.', // SEO: 包含核心卖点
 
     longDescription: `
-      <h2>Empower Your Productivity with Microsoft 365 Family</h2>
-      <p>Unlock the full potential of your work and personal projects with a <strong>Microsoft 365 Family</strong> subscription. This is the ultimate package for productivity, creativity, and security, activated by joining our official Family plan via an invitation to your own Microsoft account.</p>
+      <h2>Microsoft 365 Family – Power Up Your Work & Life</h2>
+      <p>Join thousands of professionals and students who rely on Microsoft 365 Family via JaideePass — secure, affordable, and 100% legitimate.</p>
 
-      <h3>Key Features of Microsoft 365 Family:</h3>
+      <h3>✨ Key Features:</h3>
       <ul>
-        <li><strong>Full Office Suite on Your Account:</strong> Access premium, always up-to-date versions of Word, Excel, PowerPoint, Outlook, and more, all linked to your personal Microsoft account.</li>
-        <li><strong>Massive 1TB OneDrive Cloud Storage:</strong> Each user in the family group gets their own private <strong>1TB of OneDrive storage</strong>. Your files are yours alone, secure, and accessible from any device, anywhere.</li>
-        <li><strong>Multi-Device Installation:</strong> Install and sign in to Office apps on up to 5 of your devices simultaneously, including Mac, PC, iPad, and mobile phones.</li>
-        <li><strong>Advanced Security:</strong> Benefit from advanced security features in Outlook.com and OneDrive, such as ransomware detection and file recovery.</li>
+        <li><strong>✅ Full Office Suite Access:</strong> Unlock premium versions of Word, Excel, PowerPoint, Outlook, OneNote, and more — always up to date and synced across all devices.</li>
+        <li><strong>☁️ 1TB OneDrive Storage (Per User):</strong> Each member receives 1TB of secure, personal cloud storage to back up files, access them anywhere, and share seamlessly.</li>
+        <li><strong>🖥️ Multi-Device Use:</strong> Install and use Office apps on up to 5 devices per user — including Windows, Mac, iOS, and Android.</li>
+        <li><strong>🔐 Advanced Security:</strong> Stay protected with ransomware detection, file recovery, and enhanced security in OneDrive and Outlook.</li>
       </ul>
 
-      <h2>How to Join Our Family Plan</h2>
-      <p>The process is incredibly simple and secure. After your purchase, please provide your <strong>Microsoft email address</strong> (e.g., your @outlook.com, @hotmail.com, or other associated email) on the secure Stripe checkout page. We will then send an official invitation from Microsoft for you to join our Family group. Simply accept the invitation, and all your premium benefits will be activated instantly on your account!</p>
-
-      <h2>Frequently Asked Questions (FAQ) for Microsoft 365</h2>
+      <h2>🚀 How It Works</h2>
+        <ol>
+        <li><strong>Purchase the Plan:</strong> Use our secure checkout to purchase.</li>
+        <li><strong>Submit Your Microsoft Email:</strong> Simply provide your Microsoft account email during checkout.</li>
+        <li><strong>Accept the Invite:</strong> Once accepted, all benefits are activated on your account.</li>
+      </ol>
+      
+      <h2>FAQ</h2>
       <div class="faq-accordion">
         <details>
-          <summary>Is this a genuine Microsoft 365 subscription?</summary>
+          <summary>Is this an official Microsoft subscription?</summary>
           <div class="faq-content">
             <p>Yes, this is 100% official and legitimate. You will be joining a Microsoft 365 Family plan via an official invitation sent directly from Microsoft to your own personal account.</p>
           </div>
@@ -370,13 +379,13 @@ export const productsData: Product[] = [
         <details>
           <summary>Are my OneDrive files private and secure?</summary>
           <div class="faq-content">
-            <p>Absolutely. Although you are part of a Family group, each member's 1TB OneDrive cloud storage is completely separate and private. No one else in the group, including the administrator, can see or access your files.</p>
+            <p>Absolutely. Each user gets separate, private 1TB storage. No one else in the family group can access your files.</p>
           </div>
         </details>
         <details>
           <summary>What if I already have a Microsoft subscription?</summary>
           <div class="faq-content">
-            <p>If you have an existing Microsoft 365 Personal subscription, accepting the Family invitation will automatically convert your remaining time and add it to the new Family subscription, up to a maximum of 5 years. If you have a different type of subscription, you may need to let it expire first. Please <a href="/contact">contact us</a> if you have questions about your specific situation.</p>
+            <p>If your current subscription has expired or will soon, we recommend canceling renewal and joining our Family plan instead. If you’re mid-subscription, we can help you time the upgrade smoothly.</p>
           </div>
         </details>
       </div>
@@ -392,7 +401,7 @@ export const productsData: Product[] = [
     
     // 价格已更新
     skus: [
-      { id: 'ms-12m', duration: '12 Months', price: 9.90, currency: 'USD', currencySymbol: '$', stripePriceId: 'REPLACE_WITH_M365_12M_PRICE_ID' },
+      { id: 'ms-12m', duration: '12 Months', price: 9.9, currency: 'USD', currencySymbol: '$', stripePriceId: 'price_1RZrfOJuY2t8VoKmPLyz5FMd' },
     ],
     
     listImage: '/images/products/cards/m365-card.jpg', // 注意是 .jpg
@@ -414,29 +423,27 @@ export const productsData: Product[] = [
       <h2>Dive into Iconic Worlds with HBO Max in 4K</h2>
       <p>Get your own private profile on our <strong>HBO Max 4K</strong> plan and unlock a universe of premium, critically-acclaimed entertainment. From the epic sagas of Westeros like <em>House of the Dragon</em> to the thrilling adventures of the DC Universe, experience it all in stunning 4K clarity.</p>
 
-      <h3>Key Features of Our HBO Max Plan:</h3>
+      <h3>🔥 Key Features:</h3>
       <ul>
-        <li><strong>Stunning 4K Ultra HD:</strong> Watch blockbuster movies and hit series in the highest resolution available for a truly immersive experience.</li>
+        <li><strong>Stunning 4K Ultra HD:</strong> Dive into your favorite stories — from House of the Dragon to The Batman — in breathtaking detail and clarity.</li>
         <li><strong>Private Sub-Account:</strong> You will be assigned your own profile within our premium account, ensuring your viewing experience is personal and separate.</li>
         <li><strong>Independent Watch History:</strong> Your recommendations, watch list, and "continue watching" section are yours and yours alone.</li>
-        <li><strong>Unmatched Content Library:</strong> Home to all of HBO, a massive library of Warner Bros. movies, the DC Universe, and exclusive Max Originals you can't find anywhere else.</li>
+        <li><strong>Massive Content Library:</strong> Access the complete HBO catalog, Warner Bros. blockbusters, DC Universe titles, award-winning Max Originals, and more.</li>
       </ul>
 
-      <h2>How It Works</h2>
-      <p>The process is simple and fast. After you complete the payment, we will deliver the shared account login credentials and your dedicated profile details directly to the email address you provide during checkout.</p>
+      <h2>⚙️ How It Works</h2>
+         <ol>
+        <li><strong>Purchase the Plan:</strong> Use our secure checkout to purchase.</li>
+        <li><strong>Check Your Email:</strong> We'll send you the account login credentials and clearly indicate your personal profile (e.g., "Profile 3").</li>
+        <li><strong>Set Up & Start Watching:</strong> You can lock your profile with a PIN for added privacy. Start streaming immediately.</li>
+      </ol>
 
-      <h2>Frequently Asked Questions (FAQ) for HBO Max</h2>
+      <h2>FAQ</h2>
       <div class="faq-accordion">
         <details>
           <summary>Is this a private account?</summary>
           <div class="faq-content">
-            <p>You will receive access to a <strong>private profile</strong> on a shared HBO Max account. This gives you your own separate space with an independent watch history and personalized recommendations.</p>
-          </div>
-        </details>
-        <details>
-          <summary>Can I set a PIN on my profile?</summary>
-          <div class="faq-content">
-            <p>Yes, HBO Max allows you to set a PIN for your profile to prevent others from accessing it. You can set this up in the "Profile & Parental Controls" section of your account settings after logging in.</p>
+            <p>Yes, it’s a family account, you get a fully private sub-profile that keeps your data separate and secure.</p>
           </div>
         </details>
         <details>
@@ -448,7 +455,7 @@ export const productsData: Product[] = [
         <details>
           <summary>What happens if I have login issues?</summary>
           <div class="faq-content">
-            <p>Our 24/7 customer support is here to help. If you ever encounter any issues, simply <a href="/contact">contact us</a>, and we will resolve it or provide a replacement promptly to ensure you don't miss out on your favorite shows.</p>
+            <p>We offer responsive support via WhatsApp or email. Reach out anytime for quick help with login, playback, or device activation.</p>
           </div>
         </details>
       </div>
@@ -464,8 +471,8 @@ export const productsData: Product[] = [
     
     // 价格已更新
     skus: [
-      { id: 'hbo-1m', duration: '1 Month', price: 5.00, currency: 'USD', currencySymbol: '$', stripePriceId: 'REPLACE_WITH_HBO_1M_PRICE_ID' },
-      { id: 'hbo-3m', duration: '3 Months', price: 12.00, currency: 'USD', currencySymbol: '$', stripePriceId: 'REPLACE_WITH_HBO_3M_PRICE_ID' },
+      { id: 'hbo-1m', duration: '1 Month', price: 5.00, currency: 'USD', currencySymbol: '$', stripePriceId: 'price_1RZUU6JuY2t8VoKmRw3YVhkk' },
+      { id: 'hbo-3m', duration: '3 Months', price: 12.00, currency: 'USD', currencySymbol: '$', stripePriceId: 'price_1RZUU6JuY2t8VoKmzf4HnH9s' },
     ],
     
     listImage: '/images/products/cards/hbo-card.png',

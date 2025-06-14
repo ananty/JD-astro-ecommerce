@@ -5,4 +5,4 @@ User-agent: *
 Allow: /
 
 # Point search engines to the sitemap.
-Sitemap: https://www.your-final-domain.com/sitemap-0.xml
+Sitemap: https://jaideepass.com/sitemap-index.xml
