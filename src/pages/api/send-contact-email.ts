@@ -1,22 +1,21 @@
-// src/pages/api/send-contact-email.ts
+// src/pages/api/send-contact-email.ts (最终 Cloudflare 兼容版)
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 import dotenv from 'dotenv';
 
-// 告诉 Astro，这个端点是服务器端渲染的
 export const prerender = false;
 
-// 加载环境变量
+// 在本地开发时加载 .env, 在生产环境无害地跳过
 dotenv.config();
 
-// 从环境变量安全地获取配置
-const resendApiKey = process.env.RESEND_API_KEY;
-const toEmail = process.env.CONTACT_FORM_RECEIVER_EMAIL;
-const fromEmail = process.env.CONTACT_FORM_SENDER_EMAIL;
+// 优先从平台注入的环境变量获取，再从 process.env 回退
+const resendApiKey = (import.meta.env.RESEND_API_KEY || process.env.RESEND_API_KEY) as string;
+const toEmail = (import.meta.env.CONTACT_FORM_RECEIVER_EMAIL || process.env.CONTACT_FORM_RECEIVER_EMAIL) as string;
+const fromEmail = (import.meta.env.CONTACT_FORM_SENDER_EMAIL || process.env.CONTACT_FORM_SENDER_EMAIL) as string;
 
-// 启动时检查关键配置是否存在
+// 如果关键配置不存在，则在初始化时就抛出错误
 if (!resendApiKey || !toEmail || !fromEmail) {
-  throw new Error("Missing required Resend environment variables. Please check your .env file.");
+  throw new Error("Missing Resend environment variables. Check your platform's environment variable settings.");
 }
 
 const resend = new Resend(resendApiKey);
@@ -27,24 +26,21 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   try {
-    // 使用 FormData 来处理表单提交，更标准
     const data = await request.formData();
-    const name = data.get('name') as string || 'Anonymous';
+    const name = (data.get('name') as string) || 'Anonymous';
     const email = data.get('email') as string;
-    const subject = data.get('subject') as string || 'No Subject';
+    const subject = (data.get('subject') as string) || 'No Subject';
     const message = data.get('message') as string;
 
-    // 服务器端数据校验
     if (!email || !message) {
-      return new Response(JSON.stringify({ error: "Email and message are required fields." }), { status: 400 });
+      return new Response(JSON.stringify({ error: "Email and message are required." }), { status: 400 });
     }
 
-    // 调用 Resend API 发送邮件
     const { data: emailData, error } = await resend.emails.send({
       from: fromEmail,
       to: toEmail,
       subject: `[Jaideepas Contact Form] ${subject}`,
-      reply_to: email, // 将回复地址设为用户的邮箱，方便你直接回复
+      reply_to: email,
       html: `
         <div style="font-family: sans-serif; padding: 20px; background-color: #f9f9f9;">
           <h2 style="color: #333;">New Message from Jaideepas.com</h2>
@@ -62,7 +58,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     if (error) {
       console.error({ error });
-      return new Response(JSON.stringify({ error: 'Failed to send message due to a server error.' }), { status: 500 });
+      return new Response(JSON.stringify({ error: 'Failed to send message.' }), { status: 500 });
     }
 
     return new Response(JSON.stringify({ success: 'Message sent successfully!' }), { status: 200 });
