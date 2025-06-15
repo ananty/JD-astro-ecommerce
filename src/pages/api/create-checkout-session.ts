@@ -1,15 +1,18 @@
-// src/pages/api/create-checkout-session.ts (最终可靠版)
+// src/pages/api/create-checkout-session.ts (最终版 - 无 dotenv)
 import type { APIRoute } from 'astro';
 import Stripe from 'stripe';
-import dotenv from 'dotenv';
 
-// 这一行在本地开发时会从 .env 加载变量。在 Cloudflare 上，它不会做任何事，因为 .env 文件不存在。
-dotenv.config();
-
+// 告诉 Astro，这个端点是服务器端渲染的
 export const prerender = false;
 
-// 优先从平台注入的环境变量获取 (Cloudflare)，如果获取不到 (本地开发)，再从 process.env 获取 (由 dotenv 加载)。
-const secretKey = (import.meta.env.STRIPE_SECRET_KEY || process.env.STRIPE_SECRET_KEY) as string;
+// 直接使用 import.meta.env，这是 Astro 推荐的跨环境方式
+// 在本地，它会读取 .env 文件；在 Cloudflare，它会读取后台设置的环境变量
+const secretKey = import.meta.env.STRIPE_SECRET_KEY;
+
+// 在模块加载时就进行检查，如果密钥不存在，服务器启动会失败，这是好的实践
+if (!secretKey) {
+  throw new Error("FATAL ERROR: STRIPE_SECRET_KEY environment variable is not set. Please check your .env file locally or your hosting provider's settings in production.");
+}
 
 const stripe = new Stripe(secretKey, {
   apiVersion: "2024-04-10",
@@ -34,13 +37,7 @@ const fieldConfigs = {
 
 export const POST: APIRoute = async ({ request }) => {
   if (request.method !== 'POST') {
-    return new Response(null, { status: 405, statusText: 'Method Not Allowed' });
-  }
-
-  // 检查 Stripe 是否已正确初始化
-  if (!stripe) {
-      console.error("Stripe has not been initialized. Check your secret key.");
-      return new Response(JSON.stringify({ error: "Server payment configuration error." }), { status: 500 });
+    return new Response(JSON.stringify({ message: "Method Not Allowed" }), { status: 405 });
   }
 
   try {
@@ -56,7 +53,9 @@ export const POST: APIRoute = async ({ request }) => {
       mode: 'payment',
       success_url: successUrl,
       cancel_url: cancelUrl,
-      metadata: { product_slug: productSlug },
+      metadata: {
+        product_slug: productSlug,
+      },
       custom_fields: [],
     };
     
@@ -88,6 +87,6 @@ export const POST: APIRoute = async ({ request }) => {
 
   } catch (error) {
     console.error("Error creating Stripe session:", error);
-    return new Response(JSON.stringify({ error: (error as Error).message }), { status: 500 });
+    return new Response(JSON.stringify({ error: "An internal server error occurred." }), { status: 500 });
   }
 };

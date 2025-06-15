@@ -1,21 +1,18 @@
-// src/pages/api/send-contact-email.ts (最终 Cloudflare 兼容版)
+// src/pages/api/send-contact-email.ts (最终版 - 无 dotenv)
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
-import dotenv from 'dotenv';
 
+// 告诉 Astro，这个端点是服务器端渲染的
 export const prerender = false;
 
-// 在本地开发时加载 .env, 在生产环境无害地跳过
-dotenv.config();
+// 直接从 Astro 的运行时环境中获取环境变量
+const resendApiKey = import.meta.env.RESEND_API_KEY;
+const toEmail = import.meta.env.CONTACT_FORM_RECEIVER_EMAIL;
+const fromEmail = import.meta.env.CONTACT_FORM_SENDER_EMAIL;
 
-// 优先从平台注入的环境变量获取，再从 process.env 回退
-const resendApiKey = (import.meta.env.RESEND_API_KEY || process.env.RESEND_API_KEY) as string;
-const toEmail = (import.meta.env.CONTACT_FORM_RECEIVER_EMAIL || process.env.CONTACT_FORM_RECEIVER_EMAIL) as string;
-const fromEmail = (import.meta.env.CONTACT_FORM_SENDER_EMAIL || process.env.CONTACT_FORM_SENDER_EMAIL) as string;
-
-// 如果关键配置不存在，则在初始化时就抛出错误
+// 启动时检查关键配置是否存在
 if (!resendApiKey || !toEmail || !fromEmail) {
-  throw new Error("Missing Resend environment variables. Check your platform's environment variable settings.");
+  throw new Error("FATAL ERROR: Missing Resend environment variables. Please check your hosting provider's settings.");
 }
 
 const resend = new Resend(resendApiKey);
@@ -58,7 +55,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     if (error) {
       console.error({ error });
-      return new Response(JSON.stringify({ error: 'Failed to send message.' }), { status: 500 });
+      return new Response(JSON.stringify({ error: 'Failed to send message due to a server error.' }), { status: 500 });
     }
 
     return new Response(JSON.stringify({ success: 'Message sent successfully!' }), { status: 200 });
